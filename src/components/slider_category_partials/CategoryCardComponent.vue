@@ -5,8 +5,9 @@
       <div v-for="category in categories" :key="category.id" class="category-card">
         <router-link :to="getRestaurantLink(category.id)" class="card-link">
           <div class="card-body">
-            <h5 class="card-title">{{ category.category_kitchen }}</h5>
-            <div class="card-image" :style="cardImageStyle(category.image)"></div>
+            <div class="card-image" :style="{ backgroundImage: `url(${category.image})` }">
+              <div class="card-title">{{ category.category_kitchen }}</div>
+            </div>
           </div>
         </router-link>
       </div>
@@ -15,38 +16,43 @@
 </template>
 
 <script>
-import axios from 'axios';
-
 export default {
   data() {
     return {
-      categories: [],
+      categories: [
+        { id: 1, category_kitchen: 'italiano', image: '/images/cucinaItaliana.jpg' },
+        { id: 2, category_kitchen: 'americana', image: 'path/to/american-image.jpg' },
+        { id: 3, category_kitchen: 'indiana', image: 'path/to/indian-image.jpg' },
+        { id: 4, category_kitchen: 'cinese', image: 'path/to/chinese-image.jpg' },
+        { id: 5, category_kitchen: 'giapponese', image: 'path/to/japanese-image.jpg' },
+        { id: 6, category_kitchen: 'coreana', image: 'path/to/korean-image.jpg' },
+        { id: 7, category_kitchen: 'messicana', image: 'path/to/mexican-image.jpg' },
+        { id: 8, category_kitchen: 'nepalese', image: 'path/to/nepalese-image.jpg' },
+        { id: 9, category_kitchen: 'malese', image: 'path/to/malaysian-image.jpg' },
+        { id: 10, category_kitchen: 'domenicana', image: 'path/to/dominican-image.jpg' },
+        { id: 11, category_kitchen: 'spagnola', image: 'path/to/spanish-image.jpg' },
+        { id: 12, category_kitchen: 'turca', image: 'path/to/turkish-image.jpg' },
+        { id: 13, category_kitchen: 'argentina', image: 'path/to/argentinian-image.jpg' },
+        { id: 14, category_kitchen: 'brasiliana', image: 'path/to/brazilian-image.jpg' },
+        { id: 15, category_kitchen: 'hawaiana', image: 'path/to/hawaiian-image.jpg' },
+        { id: 16, category_kitchen: 'greca', image: 'path/to/greek-image.jpg' },
+        { id: 17, category_kitchen: 'rumena', image: 'path/to/romanian-image.jpg' },
+        { id: 18, category_kitchen: 'moldava', image: 'path/to/moldavian-image.jpg' },
+        ],
     };
-  },
-  mounted() {
-    this.fetchCategories();
   },
   methods: {
     getRestaurantLink(categoryId) {
       return {
-        name: 'restaurants',
+        name: 'category-restaurants',
         params: { categoryId },
       };
     },
-    async fetchCategories() {
-      try {
-        const response = await axios.get('http://127.0.0.1:8000/api/typologies');
-        this.categories = response.data.results;
-      } catch (error) {
-        console.error(error);
-      }
-    },
-    cardImageStyle(imageName) {
-      return { backgroundImage: `url(/assets/images/${imageName}.jpg)` };
-    },
+
   },
 };
 </script>
+
 
 <style scoped>
 .category-carousel {
@@ -71,7 +77,7 @@ export default {
 .card-title {
   font-size: 16px;
   font-weight: bold;
-  margin-bottom: 5px;
+  color: #000000; 
 }
 
 .card-image {
@@ -79,6 +85,9 @@ export default {
   background-size: cover;
   background-position: center;
   border-radius: 5px;
+  display: flex; 
+  justify-content: center; 
+  align-items: center; 
 }
 
 .card-link {

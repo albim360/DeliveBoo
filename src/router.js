@@ -37,16 +37,15 @@ const router = createRouter({
       component: PaymentPage,
     },
     {
+      path: "/typologies/:categoryId",
+      name: "category-restaurants",
+      component: CardRestaurantComponent,
+    },
+    {
       path: "/:pathMatch(.*)*",
       name: "not-found",
       component: NotFound,
     },
-    {
-        path: "/typologies/:categoryId",
-        name: "category-restaurants",
-        component: CardRestaurantComponent,
-      },
-      
   ],
 });
 
