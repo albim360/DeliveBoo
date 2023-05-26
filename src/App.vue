@@ -1,18 +1,23 @@
 <template>
-    <header>
-      <HeaderComponent />
-      <CategoryCardComponent/>
-    </header>
-
-    <footer>
-      <FooterComponent />
-    </footer>
+  <header>
+    <HeaderComponent />
+    CategoryCardComponent
+  </header>
+  <main>
+    <AllRestaurant />
+  </main>
+  <footer>
+    <FooterComponent />
+  </footer>
 </template>
 
 <script>
 import HeaderComponent from './components/HeaderComponent.vue';
-import FooterComponent from './components/footer_partials/FooterComponent.vue';
+
+import FooterComponent from './components/footer_partials//FooterComponent.vue';
+import AllRestaurant from './pages/AllRestaurant.vue';
 import CategoryCardComponent from './components/slider_category_partials/CategoryCardComponent.vue';
+
 
 export default {
   components: {
