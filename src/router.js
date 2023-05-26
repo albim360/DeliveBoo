@@ -1,41 +1,50 @@
-import { createRouter, createWebHistory } from 'vue-router'
-
-import Home from './pages/Home.vue'
-import AboutUs from './pages/AboutUs.vue'
-import RestaurantShow from './pages/Restaurants.show.vue'
-import RestaurantIndex from './pages/Restaurants.index.vue'
+import { createRouter, createWebHistory } from "vue-router";
 
 
-const history = createWebHistory()
-console.log('history: ', history)
+import HomePage from "./pages/HomePage.vue";
+import AllRestaurant from "./pages/AllRestaurant.vue";
+import SingleRestaurant from "./pages/SingleRestaurant.vue";
+import ContactPage from "./pages/ContactPage.vue";
+import NotFound from './pages/NotFound.vue';
+import PaymentPage from './pages/PaymentPage.vue';
+
 
 const router = createRouter({
-    history,
+    history: createWebHistory(),
     routes: [
         {
-            path: '/',
-            name: 'home',
-            component: Home,
+            path: "/",
+            name: "home",
+            component: HomePage,
         },
         {
-            path: '/about-us',
-            name: 'about',
-            component: AboutUs,
+            path: "/restaurants",
+            name: "restaurants",
+            component: AllRestaurant,
+        },
+        {
+            path: "/restaurants/:slug",
+            name: "single-restaurant",
+            component: SingleRestaurant,
+        },
+        {
+            path: "/contacts",
+            name: "contactus",
+            component: ContactPage,
+        },
+        {
+            path: "/restaurants/:slug/payment",
+            name: "payment",
+            component: PaymentPage,
+        },
+        {
+            path: "/:pathMatch(.*)*",
+            name: "not-found",
+            component: NotFound,
         },
 
-        {
-            path: '/blog',
-            name: 'restaurant.index',
-            component: RestaurantsIndex,
-        },
-        {
-            path: '/blog/:slug',
-            name: 'restaurant.show',
-            component: RestaurantsShow,
-            props: true,
-        },
 
     ],
-})
+});
 
-export { router }
+export { router };
