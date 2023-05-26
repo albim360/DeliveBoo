@@ -1,21 +1,26 @@
-<template>
-  <div>
-    <header>
-      <HeaderComponent />
-    </header>
+
+  <header>
+    <HeaderComponent />
+  </header>
     <main>
       <AllRestaurant />
     </main>
-  </div>
+  <footer>
+    <FooterComponent />
+  </footer>
+
+ 
 </template>
 
 <script>
 import HeaderComponent from './components/HeaderComponent.vue';
+import FooterComponent from './components/FooterComponent.vue';
 import AllRestaurant from './pages/AllRestaurant.vue';
 
 export default {
   components: {
     HeaderComponent,
+    FooterComponent,
     AllRestaurant
   }
 };
@@ -24,4 +29,5 @@ export default {
 <style scoped>
 /* Stili CSS specifici per questo componente */
 </style>
+
 
