@@ -1,30 +1,30 @@
 <template>
     <div>
-        <restaurantCard v-for="restaurant in restaurants" :key="restaurant.id" :restaurant="restaurant" />
+        <productCard v-for="product in products" :key="product.id" :product="product" />
     </div>
 </template>
   
 <script>
 import axios from 'axios';
-import restaurantCard from '../components/CardRestaurantComponent.vue'
+import productCard from '../components/CardProductComponent.vue'
 
 export default {
     components: {
-        restaurantCard
+        productCard
     },
     data() {
         return {
-            restaurants: []
+            products: []
         };
     },
     methods: {
-        fetchRestaurants() {
+        fetchProducts() {
             axios
-                .get('http://127.0.0.1:8000/api/restaurants')
+                .get('http://127.0.0.1:8000/api/products')
                 .then(res => {
                     const results = res.data.results;
-                    this.restaurants = results;
-                    console.log(this.restaurants);
+                    this.products = results;
+                    console.log(this.products);
                 })
                 .catch(err => {
                     console.log(err);
@@ -32,7 +32,7 @@ export default {
         }
     },
     mounted() {
-        this.fetchRestaurants();
+        this.fetchproducts();
     }
 };
 </script>
