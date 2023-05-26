@@ -1,21 +1,27 @@
 <template>
-  <header>
-    <HeaderComponent />
-  </header>
-
-
- 
+  <div>
+    <header>
+      <HeaderComponent />
+    </header>
+    <main>
+      <AllRestaurant />
+    </main>
+  </div>
 </template>
 
 <script>
 import HeaderComponent from './components/HeaderComponent.vue';
+import AllRestaurant from './pages/AllRestaurant.vue';
 
 export default {
-  components: { HeaderComponent },
-
-  
-
-}
+  components: {
+    HeaderComponent,
+    AllRestaurant
+  }
+};
 </script>
 
-<style lang="scss" scoped></style>
+<style scoped>
+/* Stili CSS specifici per questo componente */
+</style>
+
