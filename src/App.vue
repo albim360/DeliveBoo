@@ -1,4 +1,4 @@
-
+<template>
   <header>
     <HeaderComponent />
   </header>
@@ -14,7 +14,7 @@
 
 <script>
 import HeaderComponent from './components/HeaderComponent.vue';
-import FooterComponent from './components/FooterComponent.vue';
+import FooterComponent from './components/footer_partials//FooterComponent.vue';
 import AllRestaurant from './pages/AllRestaurant.vue';
 
 export default {
