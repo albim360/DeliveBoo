@@ -2,14 +2,12 @@
   <header>
     <HeaderComponent />
   </header>
-    <main>
-      <AllRestaurant />
-    </main>
+  <main>
+    <AllRestaurant />
+  </main>
   <footer>
     <FooterComponent />
   </footer>
-
- 
 </template>
 
 <script>
