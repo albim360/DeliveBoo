@@ -1,7 +1,7 @@
 <template>
   <header>
     <HeaderComponent />
-    CategoryCardComponent
+    <CategoryCardComponent />
   </header>
   <main>
     <AllRestaurant />
