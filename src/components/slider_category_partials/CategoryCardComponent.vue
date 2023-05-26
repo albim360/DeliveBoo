@@ -21,23 +21,23 @@ export default {
     return {
       categories: [
         { id: 1, category_kitchen: 'italiano', image: '/images/cucinaItaliana.jpg' },
-        { id: 2, category_kitchen: 'americana', image: 'path/to/american-image.jpg' },
-        { id: 3, category_kitchen: 'indiana', image: 'path/to/indian-image.jpg' },
-        { id: 4, category_kitchen: 'cinese', image: 'path/to/chinese-image.jpg' },
-        { id: 5, category_kitchen: 'giapponese', image: 'path/to/japanese-image.jpg' },
-        { id: 6, category_kitchen: 'coreana', image: 'path/to/korean-image.jpg' },
-        { id: 7, category_kitchen: 'messicana', image: 'path/to/mexican-image.jpg' },
-        { id: 8, category_kitchen: 'nepalese', image: 'path/to/nepalese-image.jpg' },
-        { id: 9, category_kitchen: 'malese', image: 'path/to/malaysian-image.jpg' },
-        { id: 10, category_kitchen: 'domenicana', image: 'path/to/dominican-image.jpg' },
-        { id: 11, category_kitchen: 'spagnola', image: 'path/to/spanish-image.jpg' },
-        { id: 12, category_kitchen: 'turca', image: 'path/to/turkish-image.jpg' },
-        { id: 13, category_kitchen: 'argentina', image: 'path/to/argentinian-image.jpg' },
-        { id: 14, category_kitchen: 'brasiliana', image: 'path/to/brazilian-image.jpg' },
-        { id: 15, category_kitchen: 'hawaiana', image: 'path/to/hawaiian-image.jpg' },
-        { id: 16, category_kitchen: 'greca', image: 'path/to/greek-image.jpg' },
-        { id: 17, category_kitchen: 'rumena', image: 'path/to/romanian-image.jpg' },
-        { id: 18, category_kitchen: 'moldava', image: 'path/to/moldavian-image.jpg' },
+        { id: 2, category_kitchen: 'americana', image: '/images/cucinaAmericana.jpg' },
+        { id: 3, category_kitchen: 'indiana', image: 'images/cucinaIndiana.webp' },
+        { id: 4, category_kitchen: 'cinese', image: 'images/cucinaCinese.jpg' },
+        { id: 5, category_kitchen: 'giapponese', image: 'images/cucinaGiapponese.jpg' },
+        { id: 6, category_kitchen: 'coreana', image: 'images/cucinaCoreana.jpg' },
+        { id: 7, category_kitchen: 'messicana', image: 'images/cucinaMessicana.jpg' },
+        { id: 8, category_kitchen: 'nepalese', image: 'images/cucinaNepalese.jpg' },
+        { id: 9, category_kitchen: 'malese', image: 'images/cucinaMalese.jpg' },
+        { id: 10, category_kitchen: 'domenicana', image: 'images/cucinaDomenicana.jpg' },
+        { id: 11, category_kitchen: 'spagnola', image: 'images/cucinaSpagnola.jpg' },
+        { id: 12, category_kitchen: 'turca', image: 'images/cucinaTurca.jpeg' },
+        { id: 13, category_kitchen: 'argentina', image: 'images/cucinaArgentina.jpg' },
+        { id: 14, category_kitchen: 'brasiliana', image: 'images/cucinaBrasiliana.jpg' },
+        { id: 15, category_kitchen: 'hawaiana', image: 'images/cucinaHawaiana.jpg' },
+        { id: 16, category_kitchen: 'greca', image: 'images/cucinaGreca.webp' },
+        { id: 17, category_kitchen: 'rumena', image: 'images/cucinaRumena.jpg' },
+        { id: 18, category_kitchen: 'moldava', image: 'images/cucinaMoldava.webp' },
         ],
     };
   },
@@ -65,13 +65,13 @@ export default {
   width: calc(25% - 20px);
   margin-bottom: 20px;
   background-color: #fff;
-  border-radius: 5px;
+  border-radius: 6px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   cursor: pointer;
 }
 
 .card-body {
-  padding: 10px;
+  padding: 5px;
 }
 
 .card-title {
