@@ -1,16 +1,14 @@
 <template>
-    <NavBarComponent />
-</template>
-
-<script>
-import NavBarComponent from './header_partials/NavBarComponent.vue';
-
-export default {
+    <div>
+    </div>
+  </template>
+  
+  <script>
+  export default {
     name: "HeaderComponent",
-    components: { NavBarComponent }
-}
-</script>
-
-<style lang="scss" scoped>
-// scss da mettere
-</style>
+  }
+  </script>
+  
+  <style lang="scss" scoped>
+  </style>
+  
