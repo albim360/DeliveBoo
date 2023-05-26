@@ -6,6 +6,7 @@
   </header>
   <main>
     <AllRestaurant />
+    <AllProduct />
   </main>
   <footer>
     <FooterComponent />
@@ -17,6 +18,7 @@ import HeaderComponent from './components/HeaderComponent.vue';
 
 import FooterComponent from './components/footer_partials//FooterComponent.vue';
 import AllRestaurant from './pages/AllRestaurant.vue';
+import AllProduct from './pages/AllProduct.vue';
 import CategoryCardComponent from './components/slider_category_partials/CategoryCardComponent.vue';
 import NavBarComponent from './components/header_partials/NavBarComponent.vue';
 
@@ -26,13 +28,12 @@ export default {
     HeaderComponent,
     FooterComponent,
     CategoryCardComponent,
-    NavBarComponent
-}
+    NavBarComponent,
+    // AllRestaurant,
+    // AllProduct FUNZIONANTI DA UTILIZZARE
+  }
 }
 </script>
 
-<style lang="scss" scoped>
-
-
-</style>
+<style lang="scss" scoped></style>
 

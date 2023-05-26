@@ -32,7 +32,7 @@ export default {
         }
     },
     mounted() {
-        this.fetchproducts();
+        this.fetchProducts();
     }
 };
 </script>
