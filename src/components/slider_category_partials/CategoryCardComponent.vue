@@ -13,14 +13,13 @@
     </div>
   </div>
 </template>
-
 <script>
 
 export default {
   data() {
     return {
       categories: [
-        { id: 1, category_kitchen: 'italiano', image: '../../assetts/images/cucina-italiana.jpg' },
+        { id: 1, category_kitchen: 'italiano', image: '../../assets/images/cucina-italiana.jpg' },
         { id: 2, category_kitchen: 'americana', image: 'path/to/american-image.jpg' },
         { id: 3, category_kitchen: 'indiana', image: 'path/to/indian-image.jpg' },
         { id: 4, category_kitchen: 'cinese', image: 'path/to/chinese-image.jpg' },
