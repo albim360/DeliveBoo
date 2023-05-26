@@ -1,8 +1,10 @@
-<template>
+
   <header>
     <HeaderComponent />
   </header>
-
+    <main>
+      <AllRestaurant />
+    </main>
   <footer>
     <FooterComponent />
   </footer>
@@ -12,16 +14,20 @@
 
 <script>
 import HeaderComponent from './components/HeaderComponent.vue';
-import FooterComponent from './components/footer_partials/FooterComponent.vue';
+import FooterComponent from './components/FooterComponent.vue';
+import AllRestaurant from './pages/AllRestaurant.vue';
 
 export default {
-  components: { HeaderComponent, FooterComponent }, 
-
-  
-
-}
+  components: {
+    HeaderComponent,
+    FooterComponent,
+    AllRestaurant
+  }
+};
 </script>
 
-<style lang="scss" scoped>
-
+<style scoped>
+/* Stili CSS specifici per questo componente */
 </style>
+
+
