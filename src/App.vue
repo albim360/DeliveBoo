@@ -1,11 +1,10 @@
 <template>
   <header>
     <NavBarComponent />
-    <HeaderComponent />
-    <CategoryCardComponent />
   </header>
   <main>
     <AllRestaurant />
+    <CategoryCardComponent />
     <AllProduct />
   </main>
   <footer>
@@ -14,7 +13,6 @@
 </template>
 
 <script>
-import HeaderComponent from './components/HeaderComponent.vue';
 
 import FooterComponent from './components/footer_partials//FooterComponent.vue';
 import AllRestaurant from './pages/AllRestaurant.vue';
@@ -25,7 +23,6 @@ import NavBarComponent from './components/header_partials/NavBarComponent.vue';
 
 export default {
   components: {
-    HeaderComponent,
     FooterComponent,
     CategoryCardComponent,
     NavBarComponent,
