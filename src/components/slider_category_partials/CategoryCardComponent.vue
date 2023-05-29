@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h2>Category Card</h2>
+    <h2>Esplora le Categorie di Cucina</h2>
     <div class="category-carousel">
       <div v-for="category in categories" :key="category.id" class="category-card">
         <div @click="navigateToCategory(category.id)" class="card-link">
@@ -15,11 +15,13 @@
   </div>
 </template>
 
+
 <script>
 export default {
   data() {
     return {
       categories: [
+
         { id: 1, category_kitchen: 'italiano', image: '/images/cucinaItaliana.jpg' }, 
         { id: 2, category_kitchen: 'americana', image: '/images/cucinaAmericana.jpg' },
         { id: 3, category_kitchen: 'indiana', image: 'images/cucinaIndiana.webp' },
@@ -41,6 +43,14 @@ export default {
       ],
     };
   },
+  computed: {
+  sortedCategories() {
+    const sortedArray = [...this.categories];
+    sortedArray.sort((a, b) => a.category_kitchen.localeCompare(b.category_kitchen));
+    return sortedArray;
+  },
+},
+
   methods: {
     navigateToCategory(categoryId) {
       this.$router.push({ name: 'category-restaurants', params: { categoryId } });
@@ -51,14 +61,12 @@ export default {
 
 <style scoped>
 .category-carousel {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-gap: 20px;
 }
 
 .category-card {
-  width: calc(25% - 20px);
-  margin-bottom: 20px;
   background-color: #fff;
   border-radius: 6px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -70,9 +78,14 @@ export default {
 }
 
 .card-title {
-  font-size: 16px;
+  font-size: 20px;
   font-weight: bold;
   color: #000000;
+  backdrop-filter: blur(40px); 
+  text-shadow: 2px 2px 4px rgba(11, 101, 245, 0.557);
+  background-color: #fafafa8a;
+  text-transform: uppercase;
+
 }
 
 .card-image {
@@ -89,4 +102,11 @@ export default {
   text-decoration: none;
   color: inherit;
 }
+
+@media (max-width: 767px) {
+  .category-carousel {
+    grid-template-columns: 1fr;
+  }
+}
+
 </style>
