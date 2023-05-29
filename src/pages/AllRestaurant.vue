@@ -1,6 +1,6 @@
 <template>
     <div>
-      <h2>All Restaurants</h2>
+      <h2>Ristoranti</h2>
       <div v-for="restaurant in restaurants" :key="restaurant.id" class="card">
         <div class="card-content">
           <div>
