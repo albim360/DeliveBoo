@@ -1,43 +1,38 @@
 <template>
     <div>
-        <restaurantCard v-for="restaurant in restaurants" :key="restaurant.id" :restaurant="restaurant" />
+      <h2>All Restaurants</h2>
+      <div v-for="restaurant in filteredRestaurants" :key="restaurant.id">
+        {{ restaurant.company_name }}
+      </div>
     </div>
-</template>
+  </template>
   
-<script>
-import axios from 'axios';
-import restaurantCard from '../components/CardRestaurantComponent.vue'
-
-export default {
-    components: {
-        restaurantCard
+  <script>
+  export default {
+    props: {
+      restaurants: {
+        type: Array,
+        default: () => [],
+      },
+      selectedCategoryId: {
+        type: Number,
+        default: null,
+      },
     },
-    data() {
-        return {
-            restaurants: []
-        };
-    },
-    methods: {
-        fetchRestaurants() {
-            axios
-                .get('http://127.0.0.1:8000/api/restaurants')
-                .then(res => {
-                    const results = res.data.results;
-                    this.restaurants = results;
-                    console.log(this.restaurants);
-                })
-                .catch(err => {
-                    console.log(err);
-                });
+    computed: {
+      filteredRestaurants() {
+        if (!this.selectedCategoryId) {
+          return this.restaurants;
+        } else {
+          return this.restaurants.filter((restaurant) => {
+            return restaurant.typologies.some((typology) => typology.id === this.selectedCategoryId);
+          });
         }
+      },
     },
-    mounted() {
-        this.fetchRestaurants();
-    }
-};
-</script>
+  };
+  </script>
   
-<style scoped>
-/* Stili CSS specifici per questo componente */
-</style>
+  <style scoped>
+  </style>
   

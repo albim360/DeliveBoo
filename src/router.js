@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from "vue-router";
-
+import CartPage from "./pages/CartPage.vue";
 import HomePage from "./pages/HomePage.vue";
 import AllRestaurant from "./pages/AllRestaurant.vue";
 import SingleRestaurant from "./pages/SingleRestaurant.vue";
@@ -12,41 +12,53 @@ const router = createRouter({
   history: createWebHistory(),
   routes: [
     {
-      path: "/",
-      name: "home",
+      path: '/',
+      name: 'home',
       component: HomePage,
     },
     {
-      path: "/restaurants",
-      name: "restaurants",
+      path: '/restaurants',
+      name: 'restaurants',
       component: AllRestaurant,
     },
     {
-      path: "/restaurants/:slug",
-      name: "single-restaurant",
+      path: '/restaurants/:slug',
+      name: 'single-restaurant',
       component: SingleRestaurant,
     },
     {
-      path: "/contacts",
-      name: "contactus",
+      path: '/contacts',
+      name: 'contactus',
       component: ContactPage,
     },
     {
-      path: "/restaurants/:slug/payment",
+      path: "/payment",
       name: "payment",
       component: PaymentPage,
     },
     {
-      path: "/typologies/:categoryId",
-      name: "category-restaurants",
+      path: '/category-restaurants/:categoryId',
+      name: 'category-restaurants',
+      component: AllRestaurant,
+      props: route => ({ selectedCategoryId: parseInt(route.params.categoryId) })
+    },    
+    {
+      path: '/restaurant/:slug',
+      name: 'restaurant',
       component: CardRestaurantComponent,
+      props: true,
     },
     {
-      path: "/:pathMatch(.*)*",
-      name: "not-found",
+      path: '/:pathMatch(.*)*',
+      name: 'not-found',
       component: NotFound,
+    },
+    {
+      path: "/cart",
+      name: "cart",
+      component: CartPage,
     },
   ],
 });
 
-export { router };
+export default router;

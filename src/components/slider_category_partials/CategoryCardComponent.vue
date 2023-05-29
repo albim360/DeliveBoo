@@ -3,13 +3,13 @@
     <h2>Esplora le Categorie di Cucina</h2>
     <div class="category-carousel">
       <div v-for="category in categories" :key="category.id" class="category-card">
-        <router-link :to="getRestaurantLink(category.id)" class="card-link">
+        <div @click="navigateToCategory(category.id)" class="card-link">
           <div class="card-body">
             <div class="card-image" :style="{ backgroundImage: `url(${category.image})` }">
               <div class="card-title">{{ category.category_kitchen }}</div>
             </div>
           </div>
-        </router-link>
+        </div>
       </div>
     </div>
   </div>
@@ -21,7 +21,8 @@ export default {
   data() {
     return {
       categories: [
-        { id: 1, category_kitchen: 'italiana', image: '/images/cucinaItaliana.jpg' },
+
+        { id: 1, category_kitchen: 'italiano', image: '/images/cucinaItaliana.jpg' }, 
         { id: 2, category_kitchen: 'americana', image: '/images/cucinaAmericana.jpg' },
         { id: 3, category_kitchen: 'indiana', image: 'images/cucinaIndiana.webp' },
         { id: 4, category_kitchen: 'cinese', image: 'images/cucinaCinese.jpg' },
@@ -51,11 +52,8 @@ export default {
 },
 
   methods: {
-    getRestaurantLink(categoryId) {
-      return {
-        name: 'category-restaurants',
-        params: { categoryId },
-      };
+    navigateToCategory(categoryId) {
+      this.$router.push({ name: 'category-restaurants', params: { categoryId } });
     },
   },
 };
@@ -87,6 +85,7 @@ export default {
   text-shadow: 2px 2px 4px rgba(11, 101, 245, 0.557);
   background-color: #fafafa8a;
   text-transform: uppercase;
+
 }
 
 .card-image {
@@ -109,4 +108,5 @@ export default {
     grid-template-columns: 1fr;
   }
 }
+
 </style>

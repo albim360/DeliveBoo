@@ -1,42 +1,58 @@
 <template>
     <div>
-        <restaurantCard v-for="restaurant in restaurants" :key="restaurant.id" :restaurant="restaurant" />
+      <h2>Homepage</h2>
+      <CategoryCardComponent @categorySelected="onCategorySelected" />
+      <AllProduct />
     </div>
-</template>
+  </template>
   
-<script>
-import axios from 'axios';
-import restaurantCard from '../components/CardRestaurantComponent.vue'
-
-export default {
+  <script>
+  import CategoryCardComponent from '../components/slider_category_partials/CategoryCardComponent.vue';
+import AllProduct from './AllProduct.vue';
+  import AllRestaurant from './AllRestaurant.vue';
+  import axios from 'axios';
+  
+  export default {
     components: {
-        restaurantCard
-    },
+    CategoryCardComponent,
+    AllRestaurant,
+    AllProduct
+},
     data() {
-        return {
-            restaurants: []
-        };
+      return {
+        restaurants: [],
+        selectedCategoryId: null
+      };
     },
     methods: {
-        fetchRestaurants() {
-            axios
-                .get('http://127.0.0.1:8000/api/restaurants')
-                .then(res => {
-                    const results = res.data.results;
-                    this.restaurants = results;
-                    console.log(this.restaurants);
-                })
-                .catch(err => {
-                    console.log(err);
-                });
+      async fetchRestaurants() {
+        try {
+          const response = await axios.get('http://localhost:8000/api/restaurants');
+          if (response.data.results) {
+            this.restaurants = response.data.results;
+          }
+        } catch (error) {
+          console.error(error);
         }
+      },
+      onCategorySelected(categoryId) {
+        this.selectedCategoryId = categoryId;
+      }
     },
-    mounted() {
-        this.fetchRestaurants();
+    computed: {
+      filteredRestaurants() {
+        if (!this.selectedCategoryId) {
+          return this.restaurants;
+        } else {
+          return this.restaurants.filter(restaurant => {
+            return restaurant.typologies.some(typology => typology.id === this.selectedCategoryId);
+          });
+        }
+      }
+    },
+    created() {
+      this.fetchRestaurants();
     }
-};
-</script>
+  };
+  </script>
   
-<style scoped>
-/* Stili CSS specifici per questo componente */
-</style>
