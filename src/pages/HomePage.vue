@@ -2,20 +2,22 @@
     <div>
       <h2>Homepage</h2>
       <CategoryCardComponent @categorySelected="onCategorySelected" />
-      <AllRestaurant :restaurants="filteredRestaurants" :selectedCategoryId="selectedCategoryId" />
+      <AllProduct />
     </div>
   </template>
   
   <script>
   import CategoryCardComponent from '../components/slider_category_partials/CategoryCardComponent.vue';
+import AllProduct from './AllProduct.vue';
   import AllRestaurant from './AllRestaurant.vue';
   import axios from 'axios';
   
   export default {
     components: {
-      CategoryCardComponent,
-      AllRestaurant
-    },
+    CategoryCardComponent,
+    AllRestaurant,
+    AllProduct
+},
     data() {
       return {
         restaurants: [],
