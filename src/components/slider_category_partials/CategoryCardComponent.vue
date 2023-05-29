@@ -3,13 +3,13 @@
     <h2>Category Card</h2>
     <div class="category-carousel">
       <div v-for="category in categories" :key="category.id" class="category-card">
-        <router-link :to="getRestaurantLink(category.id)" class="card-link">
+        <div @click="navigateToCategory(category.id)" class="card-link">
           <div class="card-body">
             <div class="card-image" :style="{ backgroundImage: `url(${category.image})` }">
               <div class="card-title">{{ category.category_kitchen }}</div>
             </div>
           </div>
-        </router-link>
+        </div>
       </div>
     </div>
   </div>
@@ -20,7 +20,7 @@ export default {
   data() {
     return {
       categories: [
-        { id: 1, category_kitchen: 'italiano', image: '/images/cucinaItaliana.jpg' },
+        { id: 1, category_kitchen: 'italiano', image: '/images/cucinaItaliana.jpg' }, 
         { id: 2, category_kitchen: 'americana', image: '/images/cucinaAmericana.jpg' },
         { id: 3, category_kitchen: 'indiana', image: 'images/cucinaIndiana.webp' },
         { id: 4, category_kitchen: 'cinese', image: 'images/cucinaCinese.jpg' },
@@ -38,21 +38,16 @@ export default {
         { id: 16, category_kitchen: 'greca', image: 'images/cucinaGreca.webp' },
         { id: 17, category_kitchen: 'rumena', image: 'images/cucinaRumena.jpg' },
         { id: 18, category_kitchen: 'moldava', image: 'images/cucinaMoldava.webp' },
-        ],
+      ],
     };
   },
   methods: {
-    getRestaurantLink(categoryId) {
-      return {
-        name: 'category-restaurants',
-        params: { categoryId },
-      };
+    navigateToCategory(categoryId) {
+      this.$router.push({ name: 'category-restaurants', params: { categoryId } });
     },
-
   },
 };
 </script>
-
 
 <style scoped>
 .category-carousel {
@@ -77,7 +72,7 @@ export default {
 .card-title {
   font-size: 16px;
   font-weight: bold;
-  color: #000000; 
+  color: #000000;
 }
 
 .card-image {
@@ -85,9 +80,9 @@ export default {
   background-size: cover;
   background-position: center;
   border-radius: 5px;
-  display: flex; 
-  justify-content: center; 
-  align-items: center; 
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .card-link {
