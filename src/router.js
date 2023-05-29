@@ -1,3 +1,4 @@
+
 import { createRouter, createWebHistory } from "vue-router";
 import CartPage from "./pages/CartPage.vue";
 import HomePage from "./pages/HomePage.vue";
@@ -12,23 +13,23 @@ const router = createRouter({
   history: createWebHistory(),
   routes: [
     {
-      path: "/",
-      name: "home",
+      path: '/',
+      name: 'home',
       component: HomePage,
     },
     {
-      path: "/restaurants",
-      name: "restaurants",
+      path: '/restaurants',
+      name: 'restaurants',
       component: AllRestaurant,
     },
     {
-      path: "/restaurants/:slug",
-      name: "single-restaurant",
+      path: '/restaurants/:slug',
+      name: 'single-restaurant',
       component: SingleRestaurant,
     },
     {
-      path: "/contacts",
-      name: "contactus",
+      path: '/contacts',
+      name: 'contactus',
       component: ContactPage,
     },
     {
@@ -37,13 +38,20 @@ const router = createRouter({
       component: PaymentPage,
     },
     {
-      path: "/typologies/:categoryId",
-      name: "category-restaurants",
+      path: '/category-restaurants/:categoryId',
+      name: 'category-restaurants',
+      component: AllRestaurant,
+      props: route => ({ selectedCategoryId: parseInt(route.params.categoryId) })
+    },    
+    {
+      path: '/restaurant/:slug',
+      name: 'restaurant',
       component: CardRestaurantComponent,
+      props: true,
     },
     {
-      path: "/:pathMatch(.*)*",
-      name: "not-found",
+      path: '/:pathMatch(.*)*',
+      name: 'not-found',
       component: NotFound,
     },
     {
@@ -55,4 +63,4 @@ const router = createRouter({
   ],
 });
 
-export { router };
+export default router;

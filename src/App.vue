@@ -1,36 +1,27 @@
 <template>
-  <header>
-    <NavBarComponent />
-  </header>
-  <main>
-    <AllRestaurant />
-    <CategoryCardComponent />
-    <AllProduct />
-  </main>
-  <footer>
-    <FooterComponent />
-  </footer>
+  <div>
+    <header>
+      <NavBarComponent />
+    </header>
+    <main>
+      <router-view />
+    </main>
+    <footer>
+      <FooterComponent />
+    </footer>
+  </div>
 </template>
 
 <script>
-
-import FooterComponent from './components/footer_partials//FooterComponent.vue';
-import AllRestaurant from './pages/AllRestaurant.vue';
-import AllProduct from './pages/AllProduct.vue';
-import CategoryCardComponent from './components/slider_category_partials/CategoryCardComponent.vue';
+import FooterComponent from './components/footer_partials/FooterComponent.vue';
 import NavBarComponent from './components/header_partials/NavBarComponent.vue';
-
 
 export default {
   components: {
     FooterComponent,
-    CategoryCardComponent,
-    NavBarComponent,
-    // AllRestaurant,
-    AllProduct
+    NavBarComponent
   }
 }
 </script>
 
 <style lang="scss" scoped></style>
-
