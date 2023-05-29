@@ -1,4 +1,3 @@
-
 import { createRouter, createWebHistory } from "vue-router";
 import CartPage from "./pages/CartPage.vue";
 import HomePage from "./pages/HomePage.vue";
@@ -59,7 +58,6 @@ const router = createRouter({
       name: "cart",
       component: CartPage,
     },
-
   ],
 });
 
