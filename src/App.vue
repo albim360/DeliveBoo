@@ -27,7 +27,7 @@ export default {
     CategoryCardComponent,
     NavBarComponent,
     // AllRestaurant,
-    // AllProduct FUNZIONANTI DA UTILIZZARE
+    AllProduct
   }
 }
 </script>
