@@ -20,14 +20,22 @@
             <router-link class="nav-link" to="/products">Prodotti</router-link>
           </li>
           <li class="nav-item">
-            <router-link class="nav-link" to="/cart">Carrello</router-link>
+            <router-link class="nav-link" to="/cart" @click="navigateToPayment">Carrello</router-link>
           </li>
         </ul>
       </div>
     </div>
   </nav>
 </template>
-
+<script>
+export default {
+  methods: {
+    navigateToPayment() {
+      this.$router.push("/payment");
+    },
+  },
+};
+</script>
 <style scoped>
 .navbar {
   background-color: #fff;

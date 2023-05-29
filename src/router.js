@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from "vue-router";
-
+import CartPage from "./pages/CartPage.vue";
 import HomePage from "./pages/HomePage.vue";
 import AllRestaurant from "./pages/AllRestaurant.vue";
 import SingleRestaurant from "./pages/SingleRestaurant.vue";
@@ -32,7 +32,7 @@ const router = createRouter({
       component: ContactPage,
     },
     {
-      path: "/restaurants/:slug/payment",
+      path: "/payment",
       name: "payment",
       component: PaymentPage,
     },
@@ -46,6 +46,12 @@ const router = createRouter({
       name: "not-found",
       component: NotFound,
     },
+    {
+      path: "/cart",
+      name: "cart",
+      component: CartPage,
+    },
+
   ],
 });
 
