@@ -3,7 +3,7 @@
         <h3>{{ product.name }}</h3>
         <p>{{ product.price }}</p>
         <p>{{ product.description }}</p>
-
+        <button @click="addToCart">Aggiungi al carrello</button>
     </div>
 </template>
   
@@ -12,9 +12,14 @@ export default {
     props: {
         product: {
             type: Object,
-            required: true
-        }
-    }
+            required: true,
+        },
+    },
+    methods: {
+        addToCart() {
+            this.$emit('add-to-cart', this.product);
+        },
+    },
 };
 </script>
   
@@ -39,12 +44,16 @@ export default {
     color: #666666;
 }
 
-.typology {
-    display: inline-block;
+button {
     background-color: #ffcc00;
     color: #ffffff;
-    border-radius: 20px;
-    padding: 5px 10px;
-    margin-right: 5px;
+    border: none;
+    border-radius: 4px;
+    padding: 8px 16px;
+    cursor: pointer;
 }
 </style>
+
+  
+  
+  
