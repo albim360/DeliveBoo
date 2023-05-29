@@ -2,9 +2,10 @@
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container">
       <a class="navbar-brand" href="/">
-        <img src="path/to/logo.png" alt="Logo" height="40">
+        <img src="images/logoprova.png" alt="Logo" class="logo">
       </a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarNav">
@@ -19,14 +20,22 @@
             <router-link class="nav-link" to="/products">Prodotti</router-link>
           </li>
           <li class="nav-item">
-            <router-link class="nav-link" to="/cart">Carrello</router-link>
+            <router-link class="nav-link" to="/cart" @click="navigateToPayment">Carrello</router-link>
           </li>
         </ul>
       </div>
     </div>
   </nav>
 </template>
-
+<script>
+export default {
+  methods: {
+    navigateToPayment() {
+      this.$router.push("/payment");
+    },
+  },
+};
+</script>
 <style scoped>
 .navbar {
   background-color: #fff;
@@ -34,7 +43,7 @@
 }
 
 .navbar-brand img {
-  height: 40px;
+  height: 70px;
   width: auto;
   transition: transform 0.3s ease;
 }

@@ -1,13 +1,13 @@
-import { createRouter, createWebHistory } from 'vue-router';
 
-import HomePage from './pages/HomePage.vue';
-import AllRestaurant from './pages/AllRestaurant.vue';
-import SingleRestaurant from './pages/SingleRestaurant.vue';
-import ContactPage from './pages/ContactPage.vue';
-import NotFound from './pages/NotFound.vue';
-import PaymentPage from './pages/PaymentPage.vue';
-import CategoryRestaurantsComponent from './components/CategoryRestaurantsComponent.vue';
-import CardRestaurantComponent from './components/CardRestaurantComponent.vue';
+import { createRouter, createWebHistory } from "vue-router";
+import CartPage from "./pages/CartPage.vue";
+import HomePage from "./pages/HomePage.vue";
+import AllRestaurant from "./pages/AllRestaurant.vue";
+import SingleRestaurant from "./pages/SingleRestaurant.vue";
+import ContactPage from "./pages/ContactPage.vue";
+import NotFound from "./pages/NotFound.vue";
+import PaymentPage from "./pages/PaymentPage.vue";
+import CardRestaurantComponent from "./components/CardRestaurantComponent.vue";
 
 const router = createRouter({
   history: createWebHistory(),
@@ -33,8 +33,8 @@ const router = createRouter({
       component: ContactPage,
     },
     {
-      path: '/restaurants/:slug/payment',
-      name: 'payment',
+      path: "/payment",
+      name: "payment",
       component: PaymentPage,
     },
     {
@@ -54,6 +54,12 @@ const router = createRouter({
       name: 'not-found',
       component: NotFound,
     },
+    {
+      path: "/cart",
+      name: "cart",
+      component: CartPage,
+    },
+
   ],
 });
 
