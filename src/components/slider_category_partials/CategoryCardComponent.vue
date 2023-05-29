@@ -20,7 +20,7 @@ export default {
   data() {
     return {
       categories: [
-        { id: 1, category_kitchen: 'italiano', image: '/images/cucinaItaliana.jpg' },
+        { id: 1, category_kitchen: 'italiana', image: '/images/cucinaItaliana.jpg' },
         { id: 2, category_kitchen: 'americana', image: '/images/cucinaAmericana.jpg' },
         { id: 3, category_kitchen: 'indiana', image: 'images/cucinaIndiana.webp' },
         { id: 4, category_kitchen: 'cinese', image: 'images/cucinaCinese.jpg' },
@@ -38,9 +38,17 @@ export default {
         { id: 16, category_kitchen: 'greca', image: 'images/cucinaGreca.webp' },
         { id: 17, category_kitchen: 'rumena', image: 'images/cucinaRumena.jpg' },
         { id: 18, category_kitchen: 'moldava', image: 'images/cucinaMoldava.webp' },
-        ],
+      ],
     };
   },
+  computed: {
+  sortedCategories() {
+    const sortedArray = [...this.categories];
+    sortedArray.sort((a, b) => a.category_kitchen.localeCompare(b.category_kitchen));
+    return sortedArray;
+  },
+},
+
   methods: {
     getRestaurantLink(categoryId) {
       return {
@@ -48,22 +56,18 @@ export default {
         params: { categoryId },
       };
     },
-
   },
 };
 </script>
 
-
 <style scoped>
 .category-carousel {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-gap: 20px;
 }
 
 .category-card {
-  width: calc(25% - 20px);
-  margin-bottom: 20px;
   background-color: #fff;
   border-radius: 6px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -75,9 +79,13 @@ export default {
 }
 
 .card-title {
-  font-size: 16px;
+  font-size: 20px;
   font-weight: bold;
-  color: #000000; 
+  color: #000000;
+  backdrop-filter: blur(40px); 
+  text-shadow: 2px 2px 4px rgba(11, 101, 245, 0.557);
+  background-color: #fafafa8a;
+  text-transform: uppercase;
 }
 
 .card-image {
@@ -85,13 +93,19 @@ export default {
   background-size: cover;
   background-position: center;
   border-radius: 5px;
-  display: flex; 
-  justify-content: center; 
-  align-items: center; 
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .card-link {
   text-decoration: none;
   color: inherit;
+}
+
+@media (max-width: 767px) {
+  .category-carousel {
+    grid-template-columns: 1fr;
+  }
 }
 </style>
