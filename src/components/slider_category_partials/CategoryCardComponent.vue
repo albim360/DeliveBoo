@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h2>Category Card</h2>
+    <h2>Esplora le Categorie di Cucina</h2>
     <div class="category-carousel">
       <div v-for="category in categories" :key="category.id" class="category-card">
         <router-link :to="getRestaurantLink(category.id)" class="card-link">
@@ -14,6 +14,7 @@
     </div>
   </div>
 </template>
+
 
 <script>
 export default {
