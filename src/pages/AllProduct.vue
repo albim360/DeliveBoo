@@ -2,6 +2,10 @@
     <div>
         <div class="cart">
             <h3>Carrello</h3>
+            <div v-if="showRestaurantWarning" class="alert alert-warning mt-3">
+                Impossibile aggiungere il prodotto al carrello. Appartiene a un ristorante diverso.
+            </div>
+
             <ul>
                 <li v-for="product in cartProducts" :key="product.id">
                     {{ product.name }} - {{ product.price | currency }} x {{ product.quantity }}
@@ -11,6 +15,7 @@
             <p>Totale: {{ calculateTotalPrice() | currency }}</p>
         </div>
         <product-card v-for="product in products" :key="product.id" :product="product" @add-to-cart="addToCart" />
+
     </div>
 </template>
   
@@ -27,6 +32,7 @@ export default {
             products: [],
             cart: [],
             restaurantId: null,
+            showRestaurantWarning: false,
         };
     },
     computed: {
@@ -56,13 +62,17 @@ export default {
                 });
         },
         addToCart(product) {
-            if (this.restaurantId === null || product.restaurantId === this.restaurantId) {
-                this.restaurantId = product.restaurantId;
-                this.cart.push(product);
-                this.saveCart(); // Salva il carrello dopo aver aggiunto un prodotto
-            } else {
-                console.log("Impossibile aggiungere il prodotto al carrello. Appartiene a un ristorante diverso.");
+            if (this.cart.length > 0 && this.restaurantId !== product.restaurant_id) {
+                this.showRestaurantWarning = true;
+                return;
             }
+
+            if (this.cart.length === 0) {
+                this.restaurantId = product.restaurant_id;
+            }
+
+            this.cart.push(product);
+            this.saveCart(); // Salva il carrello dopo aver aggiunto un prodotto
         },
         removeFromCart(product) {
             const index = this.cart.findIndex((item) => item.id === product.id);
@@ -95,11 +105,3 @@ export default {
 };
 </script>
 
-  
-
-
-
-
-
-  
-  
