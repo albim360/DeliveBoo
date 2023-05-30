@@ -11,10 +11,10 @@
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ms-auto">
           <li class="nav-item">
-            <a href="http://127.0.0.1:8000/login" class="nav-link">Login</a>
+            <a href="http://127.0.0.1:8000/login" class="nav-link">Login Ristoratore</a>
           </li>
           <li class="nav-item">
-            <a href="http://127.0.0.1:8000/register" class="nav-link">Registrati</a>
+            <a href="http://127.0.0.1:8000/register" class="nav-link">Registra il tuo Ristorante</a>
           </li>
           <li class="nav-item">
             <router-link class="nav-link" to="/products">Prodotti</router-link>
