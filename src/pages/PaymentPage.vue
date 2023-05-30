@@ -3,7 +3,7 @@
     <div>
         <!-- ... contenuto della pagina di pagamento ... -->
 
-        <h2>Carrello</h2>
+        <h2>Carrello </h2>
         <ul>
             <li v-for="product in cart" :key="product.id">
                 {{ product.name }} - {{ product.price | currency }}

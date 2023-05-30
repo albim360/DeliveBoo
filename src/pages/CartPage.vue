@@ -37,9 +37,13 @@ export default {
 };
 </script>
 
+<<<<<<< HEAD
 <style scoped>
 @import '../style.css'
 
 
 </style>
+=======
+<style scoped></style>
+>>>>>>> d9f8b457e99fdb5e164aec1ea3009c37b9382e19
   
