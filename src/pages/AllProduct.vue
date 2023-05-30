@@ -3,8 +3,8 @@
         <div class="cart">
             <h3>Carrello</h3>
             <ul>
-                <li v-for="product in cart" :key="product.id">
-                    {{ product.name }} - {{ product.price | currency }}
+                <li v-for="product in cartProducts" :key="product.id">
+                    {{ product.name }} - {{ product.price | currency }} x {{ product.quantity }}
                     <button @click="removeFromCart(product)">Rimuovi</button>
                 </li>
             </ul>
@@ -29,6 +29,20 @@ export default {
             restaurantId: null,
         };
     },
+    computed: {
+        cartProducts() {
+            const products = [];
+            for (const product of this.cart) {
+                const existingProduct = products.find((p) => p.id === product.id);
+                if (existingProduct) {
+                    existingProduct.quantity++;
+                } else {
+                    products.push({ ...product, quantity: 1 });
+                }
+            }
+            return products;
+        },
+    },
     methods: {
         fetchProducts() {
             axios
@@ -51,7 +65,7 @@ export default {
             }
         },
         removeFromCart(product) {
-            const index = this.cart.indexOf(product);
+            const index = this.cart.findIndex((item) => item.id === product.id);
             if (index !== -1) {
                 this.cart.splice(index, 1);
                 this.saveCart(); // Salva il carrello dopo aver rimosso un prodotto
@@ -80,6 +94,7 @@ export default {
     },
 };
 </script>
+
   
 
 
