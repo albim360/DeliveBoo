@@ -13,7 +13,7 @@
         <product-card v-for="product in products" :key="product.id" :product="product" @add-to-cart="addToCart" />
     </div>
 </template>
-  
+
 <script>
 import ProductCard from '../components/CardProductComponent.vue';
 import axios from 'axios';
