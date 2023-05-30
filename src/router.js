@@ -25,7 +25,9 @@ const router = createRouter({
       path: '/restaurants/:slug',
       name: 'single-restaurant',
       component: SingleRestaurant,
+      props: true,
     },
+
     {
       path: '/contacts',
       name: 'contactus',
@@ -48,6 +50,8 @@ const router = createRouter({
       component: CardRestaurantComponent,
       props: true,
     },
+
+
     {
       path: '/:pathMatch(.*)*',
       name: 'not-found',
