@@ -44,12 +44,12 @@ export default {
 .navbar {
   background-color: #ff6600;
   border-bottom: 1px solid #ddd;
-  padding: 20px 0;
   font-family: 'Rubik', sans-serif;
+  height: 100px;
 }
 
 .navbar-brand img {
-  height: 70px;
+  height: 95px;
   width: auto;
   transition: transform 0.3s ease;
 }
