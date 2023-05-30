@@ -1,5 +1,5 @@
 <template>
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <nav class="navbar navbar-expand-lg navbar-light">
     <div class="container">
       <a class="navbar-brand" href="/">
         <img src="images/logoprova.png" alt="Logo" class="logo">
@@ -36,10 +36,16 @@ export default {
   },
 };
 </script>
+
 <style scoped>
+
+@import url('https://fonts.googleapis.com/css2?family=Rubik&display=swap');
+
 .navbar {
-  background-color: #fff;
+  background-color: #ff6600;
   border-bottom: 1px solid #ddd;
+  padding: 20px 0;
+  font-family: 'Rubik', sans-serif;
 }
 
 .navbar-brand img {
@@ -59,7 +65,7 @@ export default {
 }
 
 .navbar-nav .nav-link:hover {
-  color: #ff6600;
+  color: #000000;
 }
 
 @media (max-width: 767px) {

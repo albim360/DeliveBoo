@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="homepage">
       <h2>Homepage</h2>
       <CategoryCardComponent @categorySelected="onCategorySelected" />
       <AllProduct />
@@ -56,3 +56,14 @@ import AllProduct from './AllProduct.vue';
   };
   </script>
   
+  <style scoped>
+
+  @import url('https://fonts.googleapis.com/css2?family=Cabin:wght@700&family=Rubik&display=swap');
+  .homepage {
+    font-family: 'Rubik', sans-serif;
+    font-family: 'Cabin', sans-serif;
+    background-color: #f5f5f5;
+    padding: 20px;
+  }
+
+  </style>
