@@ -4,7 +4,7 @@
         <ul>
             <li v-for="product in cart" :key="product.id">
                 {{ product.name }} - {{ product.price | currency }}
-                <button @click="removeFromCart(product)">Rimuovi</button>
+                <button @click="removeFromCart(product)" class="button-remove">Rimuovi</button>
             </li>
         </ul>
         <p>Totale: {{ calculateTotalPrice() | currency }}</p>
@@ -38,7 +38,7 @@ export default {
 </script>
 
 <style scoped>
-
+@import '../style.css'
 
 
 </style>

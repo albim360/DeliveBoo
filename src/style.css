@@ -11,3 +11,18 @@ menu {
   margin: 0; 
   padding: 0;
 }
+
+.button-remove {
+  background-color: #f44336;
+  border: none;
+  color: white;
+  padding: 5px 10px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 12px;
+  margin: 4px 2px;
+  padding: 10px;
+  border-radius: 50px;
+  cursor: pointer;
+}

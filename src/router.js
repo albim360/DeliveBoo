@@ -41,7 +41,7 @@ const router = createRouter({
       name: 'category-restaurants',
       component: AllRestaurant,
       props: route => ({ selectedCategoryId: parseInt(route.params.categoryId) })
-    },    
+    },
     {
       path: '/restaurant/:slug',
       name: 'restaurant',
