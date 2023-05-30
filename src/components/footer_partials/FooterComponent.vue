@@ -40,7 +40,7 @@
   <style scoped>
   .footer {
     padding: 40px 0;
-    background-color: #f8f9fa;
+    background-color: #ff6600;
   }
   
   h5, h6 {
