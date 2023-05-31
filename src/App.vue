@@ -1,10 +1,10 @@
 <template>
-  <div id="app">
+  <div id="app" class="app-container">
     <header>
       <NavBarComponent />
       <!-- <AdvancedSearch /> da aggiustare -->
     </header>
-    <main>
+    <main class="app-content container">
       <router-view />
       <AllProducts />
     </main>
@@ -30,4 +30,15 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.app-container{
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.app-content{
+  flex-grow: 1;
+  overflow-y: auto;
+}
+</style>

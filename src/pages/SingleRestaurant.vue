@@ -202,6 +202,7 @@ export default {
 .cards {
     display: flex;
     flex-wrap: wrap;
+    justify-content: space-between;
 }
 
 .card {
