@@ -7,6 +7,8 @@ import ContactPage from "./pages/ContactPage.vue";
 import NotFound from "./pages/NotFound.vue";
 import PaymentPage from "./pages/PaymentPage.vue";
 import CardRestaurantComponent from "./components/CardRestaurantComponent.vue";
+import AdvancedSearch from "./pages/AdvancedSearch.vue";
+
 
 const router = createRouter({
   history: createWebHistory(),
@@ -50,8 +52,11 @@ const router = createRouter({
       component: CardRestaurantComponent,
       props: true,
     },
-
-
+    {
+      path: "/advanced-search",
+      name: "advanced-search",
+      component: AdvancedSearch,
+    },
     {
       path: '/:pathMatch(.*)*',
       name: 'not-found',
