@@ -4,7 +4,7 @@
       <NavBarComponent />
       <!-- <AdvancedSearch /> da aggiustare -->
     </header>
-    <main class="app-content container">
+    <main class="app-content ">
       <router-view />
       <AllProducts />
     </main>
@@ -31,13 +31,14 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.app-container{
+.app-container {
   display: flex;
   flex-direction: column;
   height: 100vh;
+  background-color: #f5f5f5;
 }
 
-.app-content{
+.app-content {
   flex-grow: 1;
   overflow-y: auto;
 }
