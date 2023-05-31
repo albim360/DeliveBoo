@@ -1,7 +1,7 @@
 <template>
-    <div>
+    <div v-if="restaurant">
         <h2>Ristorante: {{ restaurant.company_name }}</h2>
-        <div class="card" v-for="product in products" :key="product.id">
+        <div class="card" v-for="product in restaurant.products" :key="product.id">
             <div class="card-content">
                 <div>
                     <strong>{{ product.name }}</strong>
@@ -40,10 +40,12 @@ export default {
         },
         fetchRestaurantData() {
             axios
-                .get(`http://localhost:8000/api/restaurants/${this.slug}`)
+                .get(`http://127.0.0.1:8000/api/restaurants/${this.slug}`)
                 .then((response) => {
-                    this.restaurant = response.data;
-                    this.fetchProducts();
+                    this.restaurant = response.data.results;
+                    console.log(response)
+
+                    // this.fetchProducts();
                 })
                 .catch((error) => {
                     console.error(error);
@@ -51,7 +53,7 @@ export default {
         },
         fetchProducts() {
             axios
-                .get(`http://localhost:8000/api/products?restaurant_id=${this.restaurant.id}`)
+                .get(`http://127.0.0.1:8000/api/products?restaurant_id=${this.restaurant.id}`)
                 .then((response) => {
                     this.products = response.data.results;
                 })
