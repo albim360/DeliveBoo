@@ -2,7 +2,7 @@
   <div>
     <h2>Esplora le Categorie di Cucina</h2>
     <div class="category-carousel">
-      <div v-for="category in categories" :key="category.id" class="category-card">
+      <div v-for="category in sortedCategories" :key="category.id" class="category-card">
         <div @click="navigateToCategory(category.id)" class="card-link">
           <div class="card-body">
             <div class="card-image" :style="{ backgroundImage: `url(${category.image})` }">
@@ -62,7 +62,7 @@ export default {
 <style scoped>
 .category-carousel {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-template-columns: repeat(4, 1fr);
   grid-gap: 20px;
 }
 
