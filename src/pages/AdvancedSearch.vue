@@ -1,5 +1,6 @@
 <template>
     <div class="container card my-4">
+
         <h1>Ricerca Avanzata</h1>
         <div class="row">
             <div class="col-12">
@@ -16,22 +17,18 @@
                     <label class="form-check-label text-capitalize" :for="typology.slug">{{ typology.slug }}</label>
                 </div>
             </div>
-        </div>
-        <div class="row">
-            <div class="col-2" v-for="restaurant in filteredRestaurants" :key="restaurant.id">
-                {{ restaurant.company_name }}
-            </div>
-        </div>
 
-
+        </div>
+      </div>
     </div>
-</template>
-
-<script>
-import axios from 'axios';
-
-export default {
+  </template>
+  
+  <script>
+  import axios from 'axios';
+  
+  export default {
     data() {
+
         return {
             typologies: [],
             restaurants: [],

@@ -22,6 +22,7 @@ export default {
   data() {
     return {
       restaurants: [],
+      products: [], // Aggiunta della variabile per memorizzare i prodotti del ristorante
     };
   },
   props: {
@@ -42,7 +43,15 @@ export default {
   },
   methods: {
     redirectToRestaurant(slug) {
-      this.$router.push({ name: 'single-restaurant', params: { slug } });
+      axios.get(`http://127.0.0.1:8000/api/restaurants/${slug}`)
+        .then(response => {
+          this.products = response.data.products; // Memorizza l'elenco dei prodotti nella variabile "products"
+          console.log(this.products); // Visualizza i prodotti nella console per debug
+          this.$router.push({ name: 'single-restaurant', params: { slug } });
+        })
+        .catch(error => {
+          console.error(error);
+        });
     },
   },
 };
@@ -60,4 +69,5 @@ export default {
   margin-top: 5px;
 }
 </style>
+
 
