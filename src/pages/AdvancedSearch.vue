@@ -19,14 +19,14 @@
             </div>
 
         </div>
-      </div>
     </div>
-  </template>
+
+</template>
   
-  <script>
-  import axios from 'axios';
-  
-  export default {
+<script>
+import axios from 'axios';
+
+export default {
     data() {
 
         return {
@@ -34,7 +34,7 @@
             restaurants: [],
             filteredRestaurants: [],
             selectedTypologies: [],
-            
+
         }
     },
     methods: {
@@ -57,7 +57,7 @@
             }
         },
         filterRestaurants() {
-            
+
         },
     },
 
@@ -68,19 +68,19 @@
             });
         },
 
-        
+
     },
-    
+
     created() {
         this.fetchTypologies();
         this.fetchRestaurants();
         // console.log(this.restaurants)
     },
 
-    updated(){
-        console.log (this.selectedTypologies)
+    updated() {
+        console.log(this.selectedTypologies)
         console.log(this.restaurants)
-        
+
         // this.fetchRestaurants();
         // this.filterRestaurants();
 
