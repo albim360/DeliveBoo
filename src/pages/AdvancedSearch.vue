@@ -4,7 +4,7 @@
         <div class="row">
             <div class="col-12">
                 <label for="rest-name">Nome ristorante</label>
-                <input class="name-search" v-model="searchQuery" @keyup="filterRestaurants" type="text" name="rest-name">
+                <input class="name-search" v-model="searchQuery" type="text" name="rest-name">
             </div>
         </div>
         <div class="row d-flex card-body">
@@ -22,6 +22,7 @@
                 {{ restaurant.company_name }}
             </div>
         </div>
+
 
     </div>
 </template>
@@ -50,34 +51,22 @@ export default {
                 });
         },
 
-        searchRestaurants() {
+        fetchRestaurants() {
             axios.get('http://127.0.0.1:8000/api/restaurants').then(res => {
-                console.log(res.data.results)
+                // console.log(res.data.results)
                 this.restaurants = res.data.results;
-                // console.log(this.restaurants)
+                console.log(this.restaurants)
             }).catch(error => {
                 console.log(error);
             });
         },
 
-        filterRestaurants(restaurants, searchQuery) {
-            return this.filteredRestaurants = this.restaurants.includes(searchQuery)
-            // if (!searchQuery) {
-            //     // se la stringa di ricerca è vuota, restituisci l'intero array di ristoranti
-            //     return restaurants;
-            // }
-
-            // // converti la stringa di ricerca in minuscolo per effettuare una ricerca case-insensitive
-            // const searchLowerCase = searchQuery.toLowerCase();
-
-            // // filtra gli elementi dell'array che contengono la stringa di ricerca nel nome
-            // const filteredRestaurants = restaurants.filter((restaurant) => {
-            //     const nameLowerCase = restaurant.name.toLowerCase();
-            //     return nameLowerCase.includes(searchLowerCase);
-            // });
-
-            // return this.filteredRestaurants = filteredRestaurants;
-        }
+        // filteredRestaurants() {
+        //     return searchQuery => {
+        //         const lowerCaseQuery = searchQuery.toLowerCase();
+        //         return this.restaurants.filter(restaurants => restaurants.company_name.toLowerCase().includes(lowerCaseQuery));
+        //     };
+        // }
     },
 
 
@@ -86,11 +75,23 @@ export default {
             return this.typologies.sort(function (a, b) {
                 return a.slug.localeCompare(b.slug);
             });
+        },
+
+        filteredRestaurants() {
+            const lowerCaseQuery = this.searchQuery.toLowerCase();
+            return this.restaurants.filter(restaurant =>
+                restaurant.company_name.toLowerCase().includes(lowerCaseQuery)
+            );
         }
     },
+    // watch: {
+    //     searchQuery() {
+    //         this.filteredRestaurants();
+    //     }
+    // },
     created() {
         this.fetchTypologies();
-        this.searchRestaurants();
+        this.fetchRestaurants();
         console.log(this.res)
     }
 }
