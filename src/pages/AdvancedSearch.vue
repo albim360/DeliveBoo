@@ -4,16 +4,16 @@
         <div class="row">
             <div class="col-12">
                 <label for="rest-name">Nome ristorante</label>
-                <input class="name-search" v-model="searchQuery" type="text" name="rest-name">
+                <input class="name-search" @keyup="filterRestaurants" type="text" name="rest-name">
             </div>
         </div>
         <div class="row d-flex card-body">
-            <div class="col row col-type d-flex ">
+            <div class="col row col-type d-flex">
                 <label for="cook-type">Tipo di cucina</label>
                 <div class="form-check col-2" v-for="typology in sortedTypologies" :key="typology.slug">
-                    <input class="form-check-input" type="checkbox" :value="typology.id" id="typology-{{typology.slug}}">
-                    <label class="form-check-label text-capitalize" for="typology-{{typology.slug}}">{{ typology.slug
-                    }}</label>
+                    <input class="form-check-input" type="checkbox" :value="typology.id" :id="typology.slug"
+                        v-model="selectedTypologies" @change="filterRestaurants">
+                    <label class="form-check-label text-capitalize" :for="typology.slug">{{ typology.slug }}</label>
                 </div>
             </div>
         </div>
@@ -36,39 +36,33 @@ export default {
             typologies: [],
             restaurants: [],
             filteredRestaurants: [],
+            selectedTypologies: [],
+            
         }
     },
     methods: {
-        fetchTypologies() {
-            axios
-                .get('http://127.0.0.1:8000/api/typologies')
-                .then(res => {
-                    console.log(res.data.results[0].slug); // stampa la risposta dell'API nella console
-                    this.typologies = res.data.results;
-                })
-                .catch(error => {
-                    console.error(error);
-                });
+        async fetchTypologies() {
+            try {
+                const response = await axios.get('http://127.0.0.1:8000/api/typologies');
+                this.typologies = response.data.results;
+            } catch (error) {
+                console.error(error);
+            }
         },
-
-        fetchRestaurants() {
-            axios.get('http://127.0.0.1:8000/api/restaurants').then(res => {
-                // console.log(res.data.results)
-                this.restaurants = res.data.results;
-                console.log(this.restaurants)
-            }).catch(error => {
-                console.log(error);
-            });
+        async fetchRestaurants() {
+            try {
+                const response = await axios.get('http://127.0.0.1:8000/api/restaurants');
+                this.restaurants = response.data.results;
+                console.log(this.restaurants); // Verifica l'array dei ristoranti
+                this.filterRestaurants(); // Applica i filtri iniziali
+            } catch (error) {
+                console.error(error);
+            }
         },
-
-        // filteredRestaurants() {
-        //     return searchQuery => {
-        //         const lowerCaseQuery = searchQuery.toLowerCase();
-        //         return this.restaurants.filter(restaurants => restaurants.company_name.toLowerCase().includes(lowerCaseQuery));
-        //     };
-        // }
+        filterRestaurants() {
+            
+        },
     },
-
 
     computed: {
         sortedTypologies: function () {
@@ -77,22 +71,22 @@ export default {
             });
         },
 
-        filteredRestaurants() {
-            const lowerCaseQuery = this.searchQuery.toLowerCase();
-            return this.restaurants.filter(restaurant =>
-                restaurant.company_name.toLowerCase().includes(lowerCaseQuery)
-            );
-        }
+        
     },
-    // watch: {
-    //     searchQuery() {
-    //         this.filteredRestaurants();
-    //     }
-    // },
+    
     created() {
         this.fetchTypologies();
         this.fetchRestaurants();
-        console.log(this.res)
+        // console.log(this.restaurants)
+    },
+
+    updated(){
+        console.log (this.selectedTypologies)
+        console.log(this.restaurants)
+        
+        // this.fetchRestaurants();
+        // this.filterRestaurants();
+
     }
 }
 </script>
