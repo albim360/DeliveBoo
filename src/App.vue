@@ -2,7 +2,7 @@
   <div id="app">
     <header>
       <NavBarComponent />
-      <AdvancedSearch />
+      <!-- <AdvancedSearch /> da aggiustare -->
     </header>
     <main>
       <router-view />
