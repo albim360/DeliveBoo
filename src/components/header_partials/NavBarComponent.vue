@@ -16,12 +16,7 @@
           <li class="nav-item">
             <a href="http://127.0.0.1:8000/register" class="nav-link">Registra il tuo Ristorante</a>
           </li>
-          <li class="nav-item">
-            <router-link class="nav-link" to="/products">Prodotti</router-link>
-          </li>
-          <li class="nav-item">
-            <router-link class="nav-link" to="/cart" @click="navigateToPayment">Carrello</router-link>
-          </li>
+
         </ul>
       </div>
     </div>
@@ -38,7 +33,6 @@ export default {
 </script>
 
 <style scoped>
-
 @import url('https://fonts.googleapis.com/css2?family=Rubik&display=swap');
 
 .navbar {
