@@ -2,7 +2,7 @@
   <div id="app" class="app-container">
     <header>
       <NavBarComponent />
-      <!-- <AdvancedSearch /> da aggiustare -->
+      <router-link to="/advanced-search" class="find-restaurant-link">Trova il ristorante che fa per te!</router-link>
     </header>
     <main class="app-content ">
       <router-view />
@@ -17,14 +17,12 @@
 <script>
 import FooterComponent from './components/footer_partials/FooterComponent.vue';
 import NavBarComponent from './components/header_partials/NavBarComponent.vue';
-import AdvancedSearch from './pages/AdvancedSearch.vue';
 import AllProduct from './pages/AllProduct.vue';
 
 export default {
   components: {
     FooterComponent,
     NavBarComponent,
-    AdvancedSearch,
     AllProduct
   }
 }
@@ -42,4 +40,27 @@ export default {
   flex-grow: 1;
   overflow-y: auto;
 }
+
+.find-restaurant-link {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  text-decoration: none;
+  font-weight: bold;
+  border-radius: 4px;
+  transition: background-color 0.3s ease-in-out;
+  margin-top: 5px;
+}
+
+.find-restaurant-link:hover {
+  background-color: #0056b3;
+}
+
+.find-restaurant-link:focus,
+.find-restaurant-link:active {
+  outline: none;
+  background-color: #0056b3;
+}
+
 </style>
