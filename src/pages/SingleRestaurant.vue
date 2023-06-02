@@ -17,8 +17,12 @@
             <p class="total-price">Totale: {{ calculateTotalPrice() | currency }}</p>
         </div>
 
-        <div v-if="restaurant" class="restaurant">
-            <h2 class="restaurant-name">Ristorante: {{ restaurant.company_name }}</h2>
+        <div v-if="restaurant" class="restaurant"
+            :style="{ backgroundImage: `url(${getRestaurantImage(restaurant.slug)})`, height: '700px', backgroundSize: 'cover' }">
+
+            <h2 class="restaurant-name">
+                Ristorante: {{ restaurant.company_name }}
+            </h2>
             <div class="cards">
                 <div class="card" v-for="product in restaurant.products" :key="product.id">
                     <div class="card-content">
@@ -31,6 +35,8 @@
                         <div class="product-price">
                             Prezzo: {{ product.price | currency }}
                         </div>
+                        <img :src="getProductImage(product.name)" :alt="product.name" class="product-image" />
+
                         <button class="add-to-cart-button" @click="addToCart(product)">
                             <i class="fas fa-shopping-cart"></i> Aggiungi al carrello
                         </button>
@@ -42,13 +48,9 @@
 </template>
   
 <script>
-import ProductCard from '../components/CardProductComponent.vue';
 import axios from 'axios';
 
 export default {
-    components: {
-        ProductCard,
-    },
     props: {
         slug: {
             type: String,
@@ -62,6 +64,18 @@ export default {
             cart: [],
             restaurantId: null,
             showRestaurantWarning: false,
+            restaurantImages: {
+                gambero_rosso: '/images/zia-restaurant.jpg',
+                oasis_sapori_antichi: '/images/Oasis.jpg'
+                // oasis_sapori_antihci: '/images/'
+
+
+            },
+            productImages: {
+                couscous_di_verdure: '/images/Couscous.jpg',
+                tortellini_alla_panna: '/images/tortellini.jpg',
+                pancetta_croccante: '/images/pancetta.jpg',
+            },
         };
     },
     computed: {
@@ -85,8 +99,6 @@ export default {
                 .then((response) => {
                     this.restaurant = response.data.results;
                     console.log(response);
-
-                    // this.fetchProducts();
                 })
                 .catch((error) => {
                     console.error(error);
@@ -135,6 +147,20 @@ export default {
                 this.cart = JSON.parse(savedCart);
             }
         },
+        getProductImage(productName) {
+            const product = this.products.find(p => p.name === productName);
+            if (product) {
+                const slug = product.slug;
+                return this.productImages[slug];
+            }
+            return ''; // Restituisci una stringa vuota se l'immagine non è trovata
+        },
+
+        getRestaurantImage(slug) {
+            return this.restaurantImages[slug];
+        },
+
+
     },
     filters: {
         currency(value) {
@@ -193,10 +219,10 @@ export default {
 
 .restaurant {
     margin-top: 20px;
-}
-
-.restaurant-name {
-    margin-bottom: 10px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    /* Aggiungi altre proprietà CSS per personalizzare l'aspetto dell'immagine di sfondo */
 }
 
 .cards {
@@ -229,6 +255,12 @@ export default {
     margin-bottom: 10px;
 }
 
+.product-image {
+    width: 100%;
+    height: auto;
+    margin-bottom: 10px;
+}
+
 .add-to-cart-button {
     background-color: #007bff;
     color: #fff;
@@ -237,7 +269,15 @@ export default {
     padding: 5px 10px;
     cursor: pointer;
 }
+
+.total-price {
+    text-align: right;
+    margin-top: 10px;
+    font-weight: bold;
+}
 </style>
+  
+
   
 
 
