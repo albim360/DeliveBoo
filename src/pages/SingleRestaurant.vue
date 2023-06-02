@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="cart">
+        <div class="cart" v-show="showCart">
             <h3>Carrello</h3>
             <div v-if="showRestaurantWarning" class="alert">
                 Impossibile aggiungere il prodotto al carrello. Appartiene a un ristorante diverso.
@@ -35,7 +35,7 @@
                         <div class="product-price">
                             Prezzo: {{ product.price | currency }}
                         </div>
-                        <img :src="getProductImage(product.name)" :alt="product.name" class="product-image" />
+
 
                         <button class="add-to-cart-button" @click="addToCart(product)">
                             <i class="fas fa-shopping-cart"></i> Aggiungi al carrello
@@ -63,6 +63,7 @@ export default {
             products: [],
             cart: [],
             restaurantId: null,
+            showCart: false,
             showRestaurantWarning: false,
             restaurantImages: {
                 gambero_rosso: '/images/zia-restaurant.jpg',
@@ -71,11 +72,7 @@ export default {
 
 
             },
-            productImages: {
-                couscous_di_verdure: '/images/Couscous.jpg',
-                tortellini_alla_panna: '/images/tortellini.jpg',
-                pancetta_croccante: '/images/pancetta.jpg',
-            },
+
         };
     },
     computed: {
@@ -125,6 +122,7 @@ export default {
                 this.restaurantId = product.restaurant_id;
             }
 
+            this.showCart = true;
             this.cart.push(product);
             this.saveCart(); // Salva il carrello dopo aver aggiunto un prodotto
         },
@@ -176,10 +174,15 @@ export default {
   
 <style scoped>
 .cart {
-    border: 1px solid #ccc;
+    border: 1px solid #dfd6d6fe;
     border-radius: 4px;
     margin-bottom: 10px;
     padding: 10px;
+    float: right;
+    width: 250px;
+    background-color: rgb(203, 133, 14);
+    float: right;
+    width: 250px;
 }
 
 .alert {
@@ -229,6 +232,8 @@ export default {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
+    padding-top: 100px;
+
 }
 
 .card {
@@ -237,6 +242,8 @@ export default {
     border-radius: 4px;
     margin-bottom: 20px;
     padding: 10px;
+
+    --bs-card-bg: rgba(255, 255, 255, 0.583);
 }
 
 .card-content {
@@ -265,7 +272,7 @@ export default {
     background-color: #007bff;
     color: #fff;
     border: none;
-    border-radius: 4px;
+    border-radius: 20px;
     padding: 5px 10px;
     cursor: pointer;
 }
@@ -275,8 +282,63 @@ export default {
     margin-top: 10px;
     font-weight: bold;
 }
+
+.restaurant-name {
+    color: rgb(233, 233, 240);
+    background-color: #ff660063;
+}
+
+@media screen and (min-width: 768px) {
+    .cart {
+        width: 350px;
+    }
+
+    .cards {
+        justify-content: space-around;
+    }
+
+    .card {
+        flex-basis: calc(25% - 20px);
+    }
+}
+
+/* Stili per schermi più piccoli */
+@media screen and (max-width: 767px) {
+    .cart {
+        width: 100%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .cards {
+        padding-top: 50px;
+    }
+
+    .card {
+        flex-basis: calc(50% - 20px);
+    }
+}
+
+/* Stili per schermi ancora più piccoli */
+@media screen and (max-width: 479px) {
+    .card {
+        flex-basis: 100%;
+    }
+}
+
+@media screen and (max-width: 400px) {
+    .card {
+        flex-basis: 90%;
+
+    }
+
+    .product-description {
+        display: none;
+    }
+}
 </style>
-  
+
+
 
   
 

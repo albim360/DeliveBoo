@@ -36,7 +36,7 @@ export default {
 @import url('https://fonts.googleapis.com/css2?family=Rubik&display=swap');
 
 .navbar {
-  background-color: #ff6600;
+  background-color: #f36d00;
   border-bottom: 1px solid #ddd;
   font-family: 'Rubik', sans-serif;
   height: 100px;
