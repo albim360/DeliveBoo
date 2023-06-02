@@ -167,10 +167,30 @@ export default {
     margin-bottom: 10px;
     padding: 10px;
     float: right;
-    background-color: rgba(255, 255, 255, 0.9);
+    background-color: rgba(255, 255, 255, 0.583);
 
-    width: 300px;
-    /* Imposta una larghezza fissa */
+}
+
+.product-description {
+    margin-bottom: 5px;
+    display: none;
+    /* Nasconde la descrizione del prodotto */
+}
+
+@media (min-width: 400px) {
+    .product-description {
+        display: block;
+        /* Mostra la descrizione del prodotto quando la larghezza della schermata è almeno 400px */
+    }
+}
+
+.alert {
+    padding: 10px;
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+    border-radius: 4px;
+    margin-top: 10px;
 }
 
 .cart-products {
@@ -204,46 +224,15 @@ export default {
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    padding: 20px;
-    border-radius: 4px;
-    color: #fff;
-    text-align: center;
-    position: relative;
-    min-height: 60vh;
-    /* Imposta l'altezza minima al 100% dell'altezza della viewport */
+    height: 60vh;
+    /* Aggiungi altre proprietà CSS per personalizzare l'aspetto dell'immagine di sfondo */
 }
-
-.restaurant::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0, 0, 0, 0.5);
-    z-index: 0;
-}
-
-.restaurant-name {
-    margin-bottom: 10px;
-    font-size: 20px;
-    padding-top: 10px;
-    padding-bottom: 10px;
-    background-size: contain;
-    background-position: center;
-    background-repeat: no-repeat;
-    position: relative;
-    z-index: 1;
-}
-
-
-
-
 
 .cards {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
+    padding-top: 100px;
 }
 
 .card {
@@ -252,7 +241,8 @@ export default {
     border-radius: 4px;
     margin-bottom: 20px;
     padding: 10px;
-    background-color: rgba(255, 255, 255, 0.428);
+
+    --bs-card-bg: rgba(255, 255, 255, 0.583);
 }
 
 .card-content {
@@ -273,8 +263,7 @@ export default {
 
 .product-image {
     width: 100%;
-    height: 250px;
-    object-fit: cover;
+    height: auto;
     margin-bottom: 10px;
 }
 
@@ -293,32 +282,25 @@ export default {
     font-weight: bold;
 }
 
-
-
-.alert {
-    background-color: #dc3545;
-    color: #fff;
-    padding: 10px;
-    border-radius: 4px;
-    margin-bottom: 10px;
+.restaurant-name {
+    color: rgb(233, 233, 240);
+    text-align: center;
 }
 
-@media screen and (min-width: 768px) {
-    .cart {
-        width: 350px;
-    }
+.product-description {
+    margin-bottom: 5px;
+    display: none;
+    /* Nasconde la descrizione del prodotto */
+}
 
-    .cards {
-        justify-content: space-around;
-    }
-
-    .card {
-        flex-basis: calc(25% - 20px);
+@media (min-width: 450px) {
+    .product-description {
+        display: block;
+        /* Mostra la descrizione del prodotto quando la larghezza della schermata è almeno 400px */
     }
 }
 
-/* Stili per schermi più piccoli */
-@media screen and (max-width: 780px) {
+@media screen and (max-width: 800px) {
     .cart {
         width: 100%;
         margin-left: auto;
@@ -334,8 +316,7 @@ export default {
     }
 
     .restaurant {
-
-        min-height: 50vh;
+        height: 50vh;
         /* Imposta l'altezza minima al 100% dell'altezza della viewport */
     }
 }
@@ -347,7 +328,6 @@ export default {
     }
 
     .restaurant {
-
         min-height: 40vh;
         /* Imposta l'altezza minima al 100% dell'altezza della viewport */
     }
@@ -356,25 +336,11 @@ export default {
 @media screen and (max-width: 400px) {
     .card {
         flex-basis: 90%;
-
     }
 
     .restaurant {
-
         min-height: 15vh;
         /* Imposta l'altezza minima al 100% dell'altezza della viewport */
     }
-
 }
 </style>
-  
-  
-  
-  
-  
-
-  
-
-
-  
-  
