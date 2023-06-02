@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="cart" v-show="showCart">
+        <div class="cart" v-show="showCart && cart.length > 0">
             <h3>Carrello</h3>
             <div v-if="showRestaurantWarning" class="alert">
                 Impossibile aggiungere il prodotto al carrello. Appartiene a un ristorante diverso.
@@ -11,7 +11,7 @@
                     <span class="product-info">
                         {{ product.name }} - {{ product.price | currency }} x {{ product.quantity }}
                     </span>
-                    <button @click="removeFromCart(product)" class="remove-button">Rimuovi</button>
+                    <button @click="removeFromCart(product)" class="remove-button">-</button>
                 </li>
             </ul>
             <p class="total-price">Totale: {{ calculateTotalPrice() | currency }}</p>
@@ -19,7 +19,6 @@
 
         <div v-if="restaurant" class="restaurant"
             :style="{ backgroundImage: `url(${getRestaurantImage(restaurant.slug)})`, height: '700px', backgroundSize: 'cover' }">
-
             <h2 class="restaurant-name">
                 Ristorante: {{ restaurant.company_name }}
             </h2>
@@ -36,7 +35,6 @@
                             Prezzo: {{ product.price | currency }}
                         </div>
 
-
                         <button class="add-to-cart-button" @click="addToCart(product)">
                             <i class="fas fa-shopping-cart"></i> Aggiungi al carrello
                         </button>
@@ -46,6 +44,7 @@
         </div>
     </div>
 </template>
+  
   
 <script>
 import axios from 'axios';
@@ -64,15 +63,12 @@ export default {
             cart: [],
             restaurantId: null,
             showCart: false,
+            isMobile: false,
             showRestaurantWarning: false,
             restaurantImages: {
                 gambero_rosso: '/images/zia-restaurant.jpg',
-                oasis_sapori_antichi: '/images/Oasis.jpg'
-                // oasis_sapori_antihci: '/images/'
-
-
+                oasis_sapori_antichi: '/images/Oasis.jpg',
             },
-
         };
     },
     computed: {
@@ -118,11 +114,12 @@ export default {
                 return;
             }
 
+
             if (this.cart.length === 0) {
                 this.restaurantId = product.restaurant_id;
+                this.showCart = true; // Mostra il carrello quando viene aggiunto il primo prodotto
             }
 
-            this.showCart = true;
             this.cart.push(product);
             this.saveCart(); // Salva il carrello dopo aver aggiunto un prodotto
         },
@@ -134,7 +131,7 @@ export default {
             }
         },
         calculateTotalPrice() {
-            return this.cart.reduce((total, product) => total + parseFloat(product.price), 0).toFixed(2);
+            return this.cart.reduce((total, product) => total + parseFloat(product.price * product.quantity), 0).toFixed(2);
         },
         saveCart() {
             localStorage.setItem('cart', JSON.stringify(this.cart));
@@ -146,7 +143,7 @@ export default {
             }
         },
         getProductImage(productName) {
-            const product = this.products.find(p => p.name === productName);
+            const product = this.products.find((p) => p.name === productName);
             if (product) {
                 const slug = product.slug;
                 return this.productImages[slug];
@@ -157,7 +154,9 @@ export default {
         getRestaurantImage(slug) {
             return this.restaurantImages[slug];
         },
-
+        checkMobile() {
+            this.isMobile = window.innerWidth < 400;
+        }
 
     },
     filters: {
@@ -168,21 +167,35 @@ export default {
     mounted() {
         this.fetchRestaurantData();
         this.fetchProducts();
+        this.showCart = true;
+        window.addEventListener('resize', this.checkMobile);
+        this.checkMobile();
     },
 };
 </script>
   
 <style scoped>
 .cart {
-    border: 1px solid #dfd6d6fe;
+    border: 1px solid #ccc;
     border-radius: 4px;
     margin-bottom: 10px;
     padding: 10px;
     float: right;
-    width: 250px;
-    background-color: rgb(203, 133, 14);
-    float: right;
-    width: 250px;
+    background-color: rgba(255, 255, 255, 0.583);
+    display: flex;
+}
+
+.product-description {
+    margin-bottom: 5px;
+    display: none;
+    /* Nasconde la descrizione del prodotto */
+}
+
+@media (min-width: 400px) {
+    .product-description {
+        display: block;
+        /* Mostra la descrizione del prodotto quando la larghezza della schermata è almeno 400px */
+    }
 }
 
 .alert {
@@ -233,7 +246,6 @@ export default {
     flex-wrap: wrap;
     justify-content: space-between;
     padding-top: 100px;
-
 }
 
 .card {
@@ -288,57 +300,22 @@ export default {
     background-color: #ff660063;
 }
 
-@media screen and (min-width: 768px) {
-    .cart {
-        width: 350px;
-    }
-
-    .cards {
-        justify-content: space-around;
-    }
-
-    .card {
-        flex-basis: calc(25% - 20px);
-    }
+.product-description {
+    margin-bottom: 5px;
+    display: none;
+    /* Nasconde la descrizione del prodotto */
 }
 
-/* Stili per schermi più piccoli */
-@media screen and (max-width: 767px) {
-    .cart {
-        width: 100%;
-        margin-left: auto;
-        margin-right: auto;
-    }
-
-    .cards {
-        padding-top: 50px;
-    }
-
-    .card {
-        flex-basis: calc(50% - 20px);
-    }
-}
-
-/* Stili per schermi ancora più piccoli */
-@media screen and (max-width: 479px) {
-    .card {
-        flex-basis: 100%;
-    }
-}
-
-@media screen and (max-width: 400px) {
-    .card {
-        flex-basis: 90%;
-
-    }
-
+@media (min-width: 450px) {
     .product-description {
-        display: none;
+        display: block;
+        /* Mostra la descrizione del prodotto quando la larghezza della schermata è almeno 400px */
     }
 }
 </style>
-
-
+  
+  
+  
 
   
 
