@@ -2,8 +2,14 @@
   <div>
     <h2>Esplora le Categorie di Cucina</h2>
     <div class="category-carousel">
-      <div v-for="(category, index) in visibleCategories" :key="category.id" class="category-card">
-        <div @click="navigateToCategory(category.id)" class="card-link">
+      <div
+        v-for="(category, index) in visibleCategories"
+        :key="category.id"
+        class="category-card"
+        :style="{ zIndex: index === 0 ? 2 : 1 }"
+        @click="navigateToCategory(category.id)"
+      >
+        <div class="card-link">
           <div class="card-image" :style="{ backgroundImage: `url(${category.image})` }">
             <div class="card-overlay">
               <div class="card-title">{{ category.category_kitchen }}</div>
@@ -62,16 +68,20 @@ export default {
       this.$router.push({ name: 'category-restaurants', params: { categoryId } });
     },
     previousSlide() {
-      this.currentIndex -= 2;
-      this.updateVisibleCategories();
+      if (this.currentIndex > 0) {
+        this.currentIndex--;
+        this.updateVisibleCategories();
+      }
     },
     nextSlide() {
-      this.currentIndex += 2;
-      this.updateVisibleCategories();
+      if (this.currentIndex < this.sortedCategories.length - 1) {
+        this.currentIndex++;
+        this.updateVisibleCategories();
+      }
     },
     updateVisibleCategories() {
       const startIndex = this.currentIndex;
-      this.visibleCategories = this.sortedCategories.slice(startIndex, startIndex + 12);
+      this.visibleCategories = this.sortedCategories.slice(startIndex, startIndex + 6);
     },
   },
 };
@@ -85,6 +95,7 @@ export default {
 }
 
 .category-card {
+  position: relative;
   background-color: #fff;
   border-radius: 6px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -159,5 +170,3 @@ export default {
   }
 }
 </style>
-
-
