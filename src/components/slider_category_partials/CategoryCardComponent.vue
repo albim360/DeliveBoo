@@ -2,7 +2,8 @@
   <div>
     <h2>Esplora le Categorie di Cucina</h2>
     <div class="category-carousel">
-      <div v-for="(category, index) in visibleCategories" :key="category.id" class="category-card">
+      <div v-for="(category, index) in visibleCategories" :key="category.id" class="category-card"
+        :class="{ 'active': category.active }">
         <div @click="navigateToCategory(category.id)" class="card-link">
           <div class="card-image" :style="{ backgroundImage: `url(${category.image})` }">
             <div class="card-overlay">
@@ -45,6 +46,7 @@ export default {
       ],
       currentIndex: 0,
       visibleCategories: [],
+      activeIndex: null,
     };
   },
   computed: {
@@ -59,6 +61,7 @@ export default {
   },
   methods: {
     navigateToCategory(categoryId) {
+      this.activeIndex = categoryId;
       this.$router.push({ name: 'category-restaurants', params: { categoryId } });
     },
     previousSlide() {
@@ -78,6 +81,20 @@ export default {
 </script>
 
 <style scoped>
+.category-card.active {
+  animation: slideRight 0.5s ease forwards;
+}
+
+@keyframes slideRight {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(100%);
+  }
+}
+
 .category-carousel {
   display: grid;
   grid-template-columns: repeat(6, 1fr);
@@ -90,6 +107,8 @@ export default {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   cursor: pointer;
   overflow: hidden;
+  position: relative;
+
 }
 
 .card-link {
@@ -100,6 +119,22 @@ export default {
   align-items: center;
   justify-content: center;
   height: 100%;
+}
+
+.card-image::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.2);
+  transition: left 0.5s ease;
+  z-index: 1;
+}
+
+.card-image:hover::before {
+  left: 0;
 }
 
 .card-image {
