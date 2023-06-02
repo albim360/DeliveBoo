@@ -1,6 +1,6 @@
 <template>
-    <div>
-        <div class="cart" v-show="showCart && cart.length > 0">
+    <div class="cart-container">
+        <div class="cart" v-show="cartProducts.length > 0">
             <h3>Carrello</h3>
             <div v-if="showRestaurantWarning" class="alert">
                 Impossibile aggiungere il prodotto al carrello. Appartiene a un ristorante diverso.
@@ -11,14 +11,14 @@
                     <span class="product-info">
                         {{ product.name }} - {{ product.price | currency }} x {{ product.quantity }}
                     </span>
-                    <button @click="removeFromCart(product)" class="remove-button">-</button>
+                    <button @click="removeFromCart(product)" class="remove-button">Rimuovi</button>
                 </li>
             </ul>
             <p class="total-price">Totale: {{ calculateTotalPrice() | currency }}</p>
         </div>
 
-        <div v-if="restaurant" class="restaurant"
-            :style="{ backgroundImage: `url(${getRestaurantImage(restaurant.slug)})`, height: '700px', backgroundSize: 'cover' }">
+        <div v-if="restaurant && restaurant.products.length > 0" class="restaurant"
+            :style="getRestaurantBackgroundStyle(restaurant.slug)">
             <h2 class="restaurant-name">
                 Ristorante: {{ restaurant.company_name }}
             </h2>
@@ -45,7 +45,6 @@
     </div>
 </template>
   
-  
 <script>
 import axios from 'axios';
 
@@ -62,13 +61,13 @@ export default {
             products: [],
             cart: [],
             restaurantId: null,
-            showCart: false,
-            isMobile: false,
             showRestaurantWarning: false,
             restaurantImages: {
                 gambero_rosso: '/images/zia-restaurant.jpg',
                 oasis_sapori_antichi: '/images/Oasis.jpg',
+                // oasis_sapori_antihci: '/images/'
             },
+
         };
     },
     computed: {
@@ -114,10 +113,8 @@ export default {
                 return;
             }
 
-
             if (this.cart.length === 0) {
                 this.restaurantId = product.restaurant_id;
-                this.showCart = true; // Mostra il carrello quando viene aggiunto il primo prodotto
             }
 
             this.cart.push(product);
@@ -131,7 +128,7 @@ export default {
             }
         },
         calculateTotalPrice() {
-            return this.cart.reduce((total, product) => total + parseFloat(product.price * product.quantity), 0).toFixed(2);
+            return this.cart.reduce((total, product) => total + parseFloat(product.price), 0).toFixed(2);
         },
         saveCart() {
             localStorage.setItem('cart', JSON.stringify(this.cart));
@@ -142,22 +139,14 @@ export default {
                 this.cart = JSON.parse(savedCart);
             }
         },
-        getProductImage(productName) {
-            const product = this.products.find((p) => p.name === productName);
-            if (product) {
-                const slug = product.slug;
-                return this.productImages[slug];
-            }
-            return ''; // Restituisci una stringa vuota se l'immagine non è trovata
-        },
-
-        getRestaurantImage(slug) {
+        getProductImage(slug) {
             return this.restaurantImages[slug];
         },
-        checkMobile() {
-            this.isMobile = window.innerWidth < 400;
-        }
-
+        getRestaurantBackgroundStyle(slug) {
+            return {
+                backgroundImage: `url(${this.restaurantImages[slug]})`,
+            };
+        },
     },
     filters: {
         currency(value) {
@@ -167,9 +156,6 @@ export default {
     mounted() {
         this.fetchRestaurantData();
         this.fetchProducts();
-        this.showCart = true;
-        window.addEventListener('resize', this.checkMobile);
-        this.checkMobile();
     },
 };
 </script>
@@ -182,7 +168,7 @@ export default {
     padding: 10px;
     float: right;
     background-color: rgba(255, 255, 255, 0.583);
-    display: flex;
+
 }
 
 .product-description {
@@ -238,6 +224,7 @@ export default {
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
+    height: 60vh;
     /* Aggiungi altre proprietà CSS per personalizzare l'aspetto dell'immagine di sfondo */
 }
 
@@ -297,7 +284,7 @@ export default {
 
 .restaurant-name {
     color: rgb(233, 233, 240);
-    background-color: #ff660063;
+    text-align: center;
 }
 
 .product-description {
@@ -312,13 +299,48 @@ export default {
         /* Mostra la descrizione del prodotto quando la larghezza della schermata è almeno 400px */
     }
 }
+
+@media screen and (max-width: 800px) {
+    .cart {
+        width: 100%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .cards {
+        padding-top: 50px;
+    }
+
+    .card {
+        flex-basis: calc(50% - 20px);
+    }
+
+    .restaurant {
+        height: 50vh;
+        /* Imposta l'altezza minima al 100% dell'altezza della viewport */
+    }
+}
+
+/* Stili per schermi ancora più piccoli */
+@media screen and (max-width: 479px) {
+    .card {
+        flex-basis: 100%;
+    }
+
+    .restaurant {
+        min-height: 40vh;
+        /* Imposta l'altezza minima al 100% dell'altezza della viewport */
+    }
+}
+
+@media screen and (max-width: 400px) {
+    .card {
+        flex-basis: 90%;
+    }
+
+    .restaurant {
+        min-height: 15vh;
+        /* Imposta l'altezza minima al 100% dell'altezza della viewport */
+    }
+}
 </style>
-  
-  
-  
-
-  
-
-
-  
-  
