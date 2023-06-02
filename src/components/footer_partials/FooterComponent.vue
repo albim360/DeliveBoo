@@ -19,7 +19,7 @@
         </div>
         <div class="col-md-3">
           <h5 class="footer-title">Gira il mondo con le nostre categorie</h5>
-          <router-link to="/advanced-search" class="footer-link">Scopri di più</router-link>
+          <router-link :to="advancedSearchLink" class="footer-link">{{ advancedSearchText }}</router-link>
         </div>
         <div class="col-md-3">
           <h5 class="footer-title">Contatti</h5>
@@ -33,9 +33,7 @@
       </div>
       <hr class="footer-divider">
       <div class="text-center">
-        <p class="footer-copyright">
-          &copy; {{ currentYear }} Deliveboo. Tutti i diritti riservati.
-        </p>
+        <p class="footer-copy">&copy; {{ currentYear }} Deliveboo. Tutti i diritti riservati.</p>
       </div>
     </div>
   </footer>
@@ -52,6 +50,8 @@ export default {
   data() {
     return {
       currentYear: new Date().getFullYear(),
+      advancedSearchLink: "/advanced-search",
+      advancedSearchText: "Scopri di più",
     };
   },
   components: {
@@ -68,7 +68,7 @@ export default {
 
 .footer-title {
   font-weight: bold;
-  color: #483434;
+  color: #fff;
 }
 
 .footer-description {
@@ -120,7 +120,78 @@ export default {
   border-top: 1px solid #ccc;
 }
 
-.footer-copyright {
+.footer-copy {
   color: #fff;
+}
+
+@media (max-width: 767px) {
+  .footer {
+    padding: 20px 0;
+  }
+  
+  .footer-title,
+  .footer-description,
+  .footer-link,
+  .footer-copy {
+    text-align: center;
+  }
+  
+  .footer-title {
+    margin-bottom: 10px;
+  }
+  
+  .footer-social {
+    text-align: center;
+    margin-top: 20px;
+  }
+  
+  .footer-links {
+    text-align: center;
+    margin-top: 20px;
+  }
+  
+  .footer-divider {
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+}
+
+/* Aggiunta di uno stile per il carosello innovativo */
+@media (min-width: 768px) {
+  .footer .row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .footer .col-md-6 {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .footer .col-md-6 .footer-title {
+    margin-bottom: 20px;
+  }
+  
+  .footer .col-md-6 .footer-description {
+    margin-bottom: 20px;
+  }
+  
+  .footer .col-md-6 .footer-social {
+    display: flex;
+  }
+  
+  .footer .col-md-6 .footer-social .social-icon {
+    margin-right: 5px;
+  }
+
+  .footer .col-md-3 .footer-link {
+    /* Esempio: Cambia il colore del testo di "Scopri di più" */
+    color: #fbf6f2;
+    /* Esempio: Modifica il font-size di "Scopri di più" */
+    font-size: 14px;
+  }
+
 }
 </style>
