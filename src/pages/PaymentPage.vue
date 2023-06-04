@@ -1,52 +1,85 @@
 <template>
-    <div class="container">
-        <div class="col-6 offset-3">
-            <div class="card bg-light">
-                <div class="card-header">Informazioni sul pagamento</div>
-                <div class="card-body">
-                    <div class="alert alert-success" v-if="nonce">
-                        Successfully generated nonce.
+    <div>
+        <div v-if="showConfirmation" class="confirmation-page">
+            <!-- Pagina di conferma del pagamento -->
+            <a class="navbar-brand" href="/">
+                <img src="images/logoprova.png" alt="Logo" class="logo">
+            </a>
+            <h1>Pagamento confermato</h1>
+            <!-- Inserisci qui il tuo logo o icona dell'home page -->
+        </div>
+        <div v-else-if="showLoader" class="loading-page">
+            <!-- Pagina di attesa con sfondo bianco e buffer circolare -->
+            <div class="loader"></div>
+        </div>
+        <div v-else>
+            <div class="container">
+                <div class="col-6 offset-3">
+                    <div class="card bg-light">
+                        <div class="card-header">Informazioni sul pagamento</div>
+                        <div class="card-body">
+                            <div class="alert alert-success" v-if="nonce">
+                                Successfully generated nonce.
+                            </div>
+                            <form @submit.prevent="payWithCreditCard">
+                                <div class="form-group">
+                                    <label for="amount">Totale</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">€</span>
+                                        </div>
+                                        <input type="number" id="amount" class="form-control" v-model="total" disabled>
+                                    </div>
+                                </div>
+                                <hr />
+                                <div class="form-group">
+                                    <label>Numero carta di credito</label>
+                                    <div id="creditCardNumber" class="form-control"></div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <label>Expire Date</label>
+                                            <div id="expireDate" class="form-control"></div>
+                                        </div>
+                                        <div class="col-6">
+                                            <label>CVV</label>
+                                            <div id="cvv" class="form-control"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button class="btn btn-primary btn-block" type="submit" :disabled="isProcessing">
+                                    <span v-if="isProcessing">
+                                        <i class="fa fa-spinner fa-spin"></i> Attendere...
+                                    </span>
+                                    <span v-else>Paga</span>
+                                </button>
+                            </form>
+                            <div class="alert alert-danger mt-3" v-if="formError">
+                                {{ formError }}
+                            </div>
+                        </div>
                     </div>
-                    <form>
-                        <div class="form-group">
-                            <label for="amount">Totale</label>
-                            <div class="input-group">
-                                <div class="input-group-prepend"><span class="input-group-text">€</span></div>
-                                <input type="number" id="amount" class="form-control" placeholder="Enter Amount">
-                            </div>
-                        </div>
-                        <hr />
-                        <div class="form-group">
-                            <label>Numero carta di credito</label>
-                            <div id="creditCardNumber" class="form-control"></div>
-                        </div>
-                        <div class="form-group">
-                            <div class="row">
-                                <div class="col-6">
-                                    <label>Expire Date</label>
-                                    <div id="expireDate" class="form-control"></div>
-                                </div>
-                                <div class="col-6">
-                                    <label>CVV</label>
-                                    <div id="cvv" class="form-control"></div>
-                                </div>
-                            </div>
-                        </div>
-                        <button class="btn btn-primary btn-block" @click.prevent="payWithCreditCard">Paga stronzo</button>
-                    </form>
                 </div>
             </div>
         </div>
     </div>
 </template>
+  
 <script>
 import braintree from 'braintree-web';
+
 export default {
     data() {
         return {
+            showConfirmation: false,
+            showLoader: false,
             hostedFieldInstance: false,
             nonce: "",
-        }
+            total: 0,
+            formError: "",
+            isProcessing: false
+        };
     },
     mounted() {
         braintree.client.create({
@@ -75,31 +108,117 @@ export default {
                             placeholder: '00 / 0000'
                         }
                     }
-                }
-                return braintree.hostedFields.create(options)
+                };
+                return braintree.hostedFields.create(options);
             })
             .then(hostedFieldInstance => {
                 this.hostedFieldInstance = hostedFieldInstance;
             })
             .catch(err => {
+                console.error(err);
             });
     },
     methods: {
         payWithCreditCard() {
             if (this.hostedFieldInstance) {
-                this.hostedFieldInstance.tokenize().then(payload => {
-                    console.log(payload);
-                    this.nonce = payload.nonce;
-                    console.log(this.nonce);
-                })
+                this.formError = ""; // Resetta l'errore del form
+                this.isProcessing = true; // Attiva lo stato di elaborazione
+
+                this.hostedFieldInstance.tokenize()
+                    .then(payload => {
+                        console.log(payload);
+                        this.nonce = payload.nonce;
+                        console.log(this.nonce);
+                        this.confirmPayment();
+                    })
                     .catch(err => {
                         console.error(err);
-                    })
+                        this.formError = "Errore durante la generazione del nonce. Riprova.";
+                        this.isProcessing = false; // Disattiva lo stato di elaborazione
+                    });
             }
+        },
+        confirmPayment() {
+            // Simula l'azione di conferma del pagamento
+            setTimeout(() => {
+                this.showConfirmationPage();
+            }, 2000);
+        },
+        showConfirmationPage() {
+            // Mostra la pagina di conferma del pagamento
+            this.showConfirmation = true;
+
+            // Mostra l'icona o il logo dell'home page
+            console.log("Mostra l'icona o il logo dell'home page.");
+
+            // Dopo un breve ritardo, reindirizza alla home
+            setTimeout(() => {
+                this.$router.push('/');
+            }, 5000);
         }
+    },
+    created() {
+        const params = new URLSearchParams(window.location.search);
+        this.total = params.get('total');
+    }
+};
+</script>
+  
+<style>
+.fa-spinner {
+    animation: fa-spin 2s infinite linear;
+}
+
+@keyframes fa-spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
     }
 }
-</script>
-<style>
 
+.confirmation-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #fff;
+}
+
+.confirmation-page h1 {
+    font-size: 24px;
+}
+
+.loading-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #fff;
+}
+
+.loader {
+    border: 4px solid #f3f3f3;
+    /* Colore del bordo */
+    border-top: 4px solid #3498db;
+    /* Colore del loader */
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
 </style>
+  
+  
