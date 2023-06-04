@@ -15,6 +15,8 @@
                 </li>
             </ul>
             <p class="total-price">Totale: {{ calculateTotalPrice() | currency }}</p>
+
+            <button @click="goToPaymentPage" class="checkout-button">Checkout</button>
         </div>
 
         <div v-if="restaurant && restaurant.products.length > 0" class="restaurant"
@@ -58,16 +60,11 @@ export default {
     data() {
         return {
             restaurant: null,
-            products: [],
             cart: [],
-            restaurantId: null,
-            showRestaurantWarning: false,
             restaurantImages: {
                 gambero_rosso: '/images/zia-restaurant.jpg',
                 oasis_sapori_antichi: '/images/Oasis.jpg',
-                // oasis_sapori_antihci: '/images/'
             },
-
         };
     },
     computed: {
@@ -96,71 +93,69 @@ export default {
                     console.error(error);
                 });
         },
+        getRestaurantBackgroundStyle(slug) {
+            return {
+                background: `url(${this.restaurantImages[slug]})`,
+                'background-size': 'cover',
+            };
+        },
+        addToCart(product) {
+            if (this.restaurant && product.restaurant_id !== this.restaurant.id) {
+                this.showRestaurantWarning = true;
+                return;
+            }
+            this.cart.push(product);
+        },
+        removeFromCart(product) {
+            const index = this.cart.findIndex((p) => p.id === product.id);
+            if (index !== -1) {
+                this.cart.splice(index, 1);
+            }
+        },
+        calculateTotalPrice() {
+            let total = 0;
+            for (const product of this.cartProducts) {
+                total += product.price * product.quantity;
+            }
+            return total;
+        },
+        goToPaymentPage() {
+            const totalAmount = this.calculateTotalPrice();
+            window.location.href = `http://192.168.0.247:5173/payment?total=${totalAmount}`;
+        },
         fetchProducts() {
             axios
                 .get(`http://127.0.0.1:8000/api/products`)
                 .then((response) => {
                     this.products = response.data.results;
-                    this.restoreCart(); // Ripristina il carrello dopo aver ottenuto i prodotti
                 })
                 .catch((error) => {
                     console.error(error);
                 });
         },
-        addToCart(product) {
-            if (this.cart.length > 0 && this.restaurantId !== product.restaurant_id) {
-                this.showRestaurantWarning = true;
-                return;
-            }
-
-            if (this.cart.length === 0) {
-                this.restaurantId = product.restaurant_id;
-            }
-
-            this.cart.push(product);
-            this.saveCart(); // Salva il carrello dopo aver aggiunto un prodotto
-        },
-        removeFromCart(product) {
-            const index = this.cart.findIndex((item) => item.id === product.id);
-            if (index !== -1) {
-                this.cart.splice(index, 1);
-                this.saveCart(); // Salva il carrello dopo aver rimosso un prodotto
-            }
-        },
-        calculateTotalPrice() {
-            return this.cart.reduce((total, product) => total + parseFloat(product.price), 0).toFixed(2);
-        },
-        saveCart() {
-            localStorage.setItem('cart', JSON.stringify(this.cart));
-        },
-        restoreCart() {
-            const savedCart = localStorage.getItem('cart');
-            if (savedCart) {
-                this.cart = JSON.parse(savedCart);
-            }
-        },
-        getProductImage(slug) {
-            return this.restaurantImages[slug];
-        },
-        getRestaurantBackgroundStyle(slug) {
-            return {
-                backgroundImage: `url(${this.restaurantImages[slug]})`,
-            };
-        },
     },
-    filters: {
-        currency(value) {
-            return parseFloat(value).toFixed(2);
-        },
-    },
-    mounted() {
+    created() {
         this.fetchRestaurantData();
         this.fetchProducts();
     },
 };
 </script>
   
+  
 <style scoped>
+/* Stili precedenti */
+
+.checkout-button {
+    background-color: #28a745;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+/* Stili successivi */
+
 .cart {
     border: 1px solid #ccc;
     border-radius: 4px;
@@ -344,3 +339,4 @@ export default {
     }
 }
 </style>
+  
