@@ -61,7 +61,6 @@
         
         <style scoped>
         .footer {
-          padding: 40px 0;
           background-color: #ff6600;
           text-align: center;
         }
@@ -75,7 +74,7 @@
         .footer-description,
         .footer-link,
         .footer-copy {
-          color: #fff;
+
           text-align: center;
         }
         
@@ -128,6 +127,7 @@
         
         .footer-copy {
           color: #fff;
+
         }
         
         @media (max-width: 767px) {
@@ -158,4 +158,4 @@
           }
         }
         </style>
-        
+
