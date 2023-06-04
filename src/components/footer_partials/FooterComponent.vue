@@ -75,7 +75,7 @@
         .footer-description,
         .footer-link,
         .footer-copy {
-          color: #fff;
+          color: #f1f1f1;
           text-align: center;
         }
         
