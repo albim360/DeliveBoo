@@ -54,6 +54,7 @@
                                     </span>
                                     <span v-else>Paga</span>
                                 </button>
+                                <h1> prova{{ price }}</h1>
                             </form>
                             <div class="alert alert-danger mt-3" v-if="formError">
                                 {{ formError }}
@@ -81,6 +82,7 @@ export default {
             isProcessing: false
         };
     },
+    props: ['price','product'],
     mounted() {
         braintree.client.create({
             authorization: "sandbox_s9d8kg26_748b2m3dq2wrsn9n"

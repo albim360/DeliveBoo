@@ -16,7 +16,10 @@
             </ul>
             <p class="total-price">Totale: {{ calculateTotalPrice() | currency }}</p>
 
-            <button @click="goToPaymentPage" class="checkout-button">Checkout</button>
+            <button @click="redirect('/payment')" class="checkout-button"
+            >
+                Checkout
+            </button>
         </div>
 
         <div v-if="restaurant && restaurant.products.length > 0" class="restaurant"
@@ -37,7 +40,7 @@
                             Prezzo: {{ product.price | currency }}
                         </div>
 
-                        <button class="add-to-cart-button" @click="addToCart(product)">
+                        <button class="add-to-cart-button" @click="addToCart(product), totPayment()">
                             <i class="fas fa-shopping-cart"></i> Aggiungi al carrello
                         </button>
                     </div>
@@ -49,6 +52,7 @@
   
 <script>
 import axios from 'axios';
+import PaymentPage from './PaymentPage.vue';
 
 export default {
     props: {
@@ -65,6 +69,12 @@ export default {
                 gambero_rosso: '/images/zia-restaurant.jpg',
                 oasis_sapori_antichi: '/images/Oasis.jpg',
             },
+            // checkOut:[
+            //     {
+            //         price: this.totPayment(),
+            //         product: this.product
+            //     }
+            // ],
         };
     },
     computed: {
@@ -119,9 +129,10 @@ export default {
             }
             return total;
         },
-        goToPaymentPage() {
+        totPayment() {
             const totalAmount = this.calculateTotalPrice();
-            window.location.href = `http://192.168.0.247:5173/payment?total=${totalAmount}`;
+            //window.location.href = `http://192.168.0.247:5173/payment?total=${totalAmount}`;
+            return totalAmount;
         },
         fetchProducts() {
             axios
@@ -133,11 +144,14 @@ export default {
                     console.error(error);
                 });
         },
+        redirect(page) {
+            this.$router.push(page);
+        }
     },
     created() {
         this.fetchRestaurantData();
         this.fetchProducts();
-    },
+    }
 };
 </script>
   
