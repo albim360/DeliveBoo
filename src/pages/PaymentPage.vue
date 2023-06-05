@@ -26,9 +26,9 @@
                                     <label for="amount">Totale</label>
                                     <div class="input-group">
                                         <div class="input-group-prepend">
-                                            <span class="input-group-text">€</span>
+                                            <span class="input-group-text">€ {{ store.total }}</span>
                                         </div>
-                                        <input type="number" id="amount" class="form-control" v-model="total" disabled>
+                                        <input type="number" id="amount" class="form-control d-none" v-model="total" disabled>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -39,10 +39,10 @@
                                     <label for="telephone">Telefono</label>
                                     <input type="tel" id="telephone" class="form-control" v-model="telephone">
                                 </div>
-                                <div class="form-group">
+                                <!-- <div class="form-group">
                                     <label for="date">Data</label>
                                     <input type="date" id="date" class="form-control" v-model="date">
-                                </div>
+                                </div> -->
                                 <div class="form-group">
                                     <label for="address">Indirizzo</label>
                                     <input type="text" id="address" class="form-control" v-model="address">
@@ -74,6 +74,7 @@
                                     </span>
                                     <span v-else>Paga</span>
                                 </button>
+                                <button class="btn btn-success"  @click="confirmPayment()">okok</button>
                             </form>
                             <div class="alert alert-danger mt-3" v-if="formError">
                                 {{ formError }}
@@ -89,10 +90,13 @@
 <script>
 import braintree from 'braintree-web';
 import axios from 'axios';
+import store from '../store'
+import { DateTime } from "luxon";
 
 export default {
     data() {
         return {
+            store,
             showConfirmation: false,
             showLoader: false,
             hostedFieldInstance: false,
@@ -167,18 +171,25 @@ export default {
         confirmPayment() {
             // Simula l'azione di conferma del pagamento
             this.showLoader = true;
-
             // Crea un oggetto FormData con i dati del form
-            const formData = new FormData();
-            formData.append("name", this.name);
-            formData.append("telephone", this.telephone);
-            formData.append("date", this.date);
-            formData.append("address", this.address);
-            formData.append("email", this.email);
-            formData.append("total", this.total);
-
+            //let formData = new FormData();
+            //formData.append("name", this.name);
+            //formData.append("telephone", this.telephone);
+            //formData.append("date", '2023-06-02 12:34:56');
+            //formData.append("address", this.address);
+            //formData.append("email", this.email);
+            //formData.append("total", this.total);
+            //formData.append("prod", store.products);
+            let dati = {
+                name: this.name,
+                telephone: this.telephone,
+                date: '2023-06-02 12:34:56',
+                address: this.address,
+                email: this.email,
+                prod: store.products,
+            }
             
-            axios.post("http://127.0.0.1:8000/api/orders", formData)
+            axios.post("http://127.0.0.1:8000/api/orders", dati)
                 .then(response => {
                     console.log("Dati inviati con successo:", response.data);
                     this.showLoader = false;
