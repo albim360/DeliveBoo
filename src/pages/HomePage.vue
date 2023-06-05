@@ -11,9 +11,12 @@
     </div>
 
     <section class="categories">
-      <h2 class="section-title">Categorie</h2>
       <CategoryCardComponent @categorySelected="onCategorySelected" />
     </section>
+
+    <button class="advanced-search-btn" @click="redirectToAdvancedSearch">
+      Non hai ancora scelto? Scopri la nostra ricerca avanzata!
+    </button>
 
     <section class="featured-restaurants">
       <h2 class="section-title">Ristoranti in evidenza</h2>
@@ -26,7 +29,9 @@
             <h3 class="restaurant-title">{{ restaurant.company_name }}</h3>
             <p class="restaurant-address">{{ restaurant.address }}</p>
             <p class="restaurant-category">{{ getRestaurantCategories(restaurant) }}</p>
-            <button class="show-products-btn" @click="redirectToRestaurant(restaurant.slug)">Mostra Prodotti</button>
+            <button class="show-products-btn" @click="redirectToRestaurant(restaurant.slug)">
+              Mostra Prodotti
+            </button>
           </div>
         </div>
       </div>
@@ -64,6 +69,9 @@ export default {
     },
     redirectToRestaurant(slug) {
       // Aggiungi qui il codice per reindirizzare all'URL del ristorante selezionato
+    },
+    redirectToAdvancedSearch() {
+      this.$router.push({ name: 'advanced-search' });
     },
     getRestaurantCategories(restaurant) {
       return restaurant.typologies.map(typology => typology.name).join(', ');
@@ -157,6 +165,28 @@ export default {
   font-size: 24px;
   font-weight: 700;
   margin-bottom: 20px;
+}
+
+.advanced-search-btn {
+  display: block;
+  margin: 20px auto;
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  text-decoration: none;
+  font-weight: bold;
+  border-radius: 4px;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.advanced-search-btn:hover {
+  background-color: #0056b3;
+}
+
+.advanced-search-btn:focus,
+.advanced-search-btn:active {
+  outline: none;
+  background-color: #0056b3;
 }
 
 .featured-restaurants {
