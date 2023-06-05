@@ -4,9 +4,6 @@
     <div v-for="restaurant in restaurants" :key="restaurant.id" class="card">
       <div class="card-content">
         <div class="restaurant-info">
-          <div class="restaurant-image">
-            <!-- Aggiungi qui l'immagine del ristorante -->
-          </div>
           <div class="restaurant-details">
             <h3 class="restaurant-name">{{ restaurant.company_name }}</h3>
             <p class="restaurant-address">{{ restaurant.address }}</p>
@@ -22,6 +19,7 @@
 import axios from 'axios';
 
 export default {
+
   data() {
     return {
       restaurants: [],

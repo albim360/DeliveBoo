@@ -24,16 +24,15 @@
         <div class="col-md-3 d-none d-md-block">
           <h5 class="footer-title">Contatti</h5>
           <ul class="footer-links">
-            <li><a href="#" class="footer-link">Assistenza</a></li>
-            <li><a href="#" class="footer-link">Termini e condizioni</a></li>
-            <li><a href="#" class="footer-link">Privacy Policy</a></li>
-            <li><a href="#" class="footer-link">FAQ</a></li>
+            <li><a href="./contacts" class="footer-link">Assistenza</a></li>
+            <li><a href="./contacts" class="footer-link">Termini e condizioni</a></li>
+            <li><a href="./contacts" class="footer-link">Privacy Policy</a></li>
+            <li><a href="./contacts" class="footer-link">FAQ</a></li>
           </ul>
         </div>
       </div>
-      <hr class="footer-divider">
-      <div class="text-center">
-        <p class="footer-copy">&copy; {{ currentYear }} Deliveboo. Tutti i diritti riservati.</p>
+      <div class="text-center copyright">
+        <p class="footer-copy ">&copy; {{ currentYear }} Deliveboo. Tutti i diritti riservati.</p>
       </div>
     </div>
   </footer>
@@ -83,6 +82,15 @@
    text-align: center;
  }
  
+ .copyright::before {
+    content: '';
+    display: block;
+    height: 1px;
+    width: 100%;
+    margin: 6px 20px;
+    background-color: #fff;
+}
+
  .social-icon {
    display: inline-block;
    width: 30px;
@@ -118,12 +126,6 @@
    color: #dcdcdc;
  }
  
- .footer-divider {
-   margin-top: 20px;
-   margin-bottom: 20px;
-   border: 0;
-   border-top: 1px solid #ccc;
- }
  
  .footer-copy {
    color: #fff;
