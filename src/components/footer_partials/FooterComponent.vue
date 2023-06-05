@@ -24,10 +24,10 @@
         <div class="col-md-3 d-none d-md-block">
           <h5 class="footer-title">Contatti</h5>
           <ul class="footer-links">
-            <li><a href="#" class="footer-link">Assistenza</a></li>
-            <li><a href="#" class="footer-link">Termini e condizioni</a></li>
-            <li><a href="#" class="footer-link">Privacy Policy</a></li>
-            <li><a href="#" class="footer-link">FAQ</a></li>
+            <li><a href="./contacts" class="footer-link">Assistenza</a></li>
+            <li><a href="./contacts" class="footer-link">Termini e condizioni</a></li>
+            <li><a href="./contacts" class="footer-link">Privacy Policy</a></li>
+            <li><a href="./contacts" class="footer-link">FAQ</a></li>
           </ul>
         </div>
       </div>
