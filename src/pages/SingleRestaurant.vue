@@ -81,34 +81,59 @@
       },
     },
     methods: {
-      fetchRestaurantData() {
-        axios
-          .get(`http://127.0.0.1:8000/api/restaurants/${this.slug}`)
-          .then((response) => {
-            this.restaurant = response.data.results;
-            console.log(response);
-          })
-          .catch((error) => {
-            console.error(error);
-          });
-      },
-      getRestaurantBackgroundStyle(slug) {
-        return {
-          background: `url(${this.restaurantImages[slug]})`,
-          'background-size': 'cover',
-        };
-      },
-      addToCart(product) {
-        if (this.restaurant && product.restaurant_id !== this.restaurant.id) {
-          this.showRestaurantWarning = true;
-          return;
-        }
-        this.cart.push(product);
-      },
-      removeFromCart(product) {
-        const index = this.cart.findIndex((p) => p.id === product.id);
-        if (index !== -1) {
-          this.cart.splice(index, 1);
+        fetchRestaurantData() {
+            axios
+                .get(`http://127.0.0.1:8000/api/restaurants/${this.slug}`)
+                .then((response) => {
+                    this.restaurant = response.data.results;
+                    console.log(response);
+                })
+                .catch((error) => {
+                    console.error(error);
+                });
+        },
+        getRestaurantBackgroundStyle(slug) {
+            return {
+                background: `url(${this.restaurantImages[slug]})`,
+                'background-size': 'cover',
+            };
+        },
+        addToCart(product) {
+            if (this.restaurant && product.restaurant_id !== this.restaurant.id) {
+                this.showRestaurantWarning = true;
+                return;
+            }
+            this.cart.push(product);
+            store.products.push(product);
+        },
+        removeFromCart(product) {
+            const index = this.cart.findIndex((p) => p.id === product.id);
+            if (index !== -1) {
+                this.cart.splice(index, 1);
+            }
+        },
+        calculateTotalPrice() {
+            let total = 0;
+            for (const product of this.cartProducts) {
+                total += product.price * product.quantity;
+            }
+            //TODO: aggiustare sintassi
+            store.total = total;
+            return total;
+        },
+
+        fetchProducts() {
+            axios
+                .get(`http://127.0.0.1:8000/api/products`)
+                .then((response) => {
+                    this.products = response.data.results;
+                })
+                .catch((error) => {
+                    console.error(error);
+                });
+        },
+        redirect(page) {
+            this.$router.push(page);
         }
       },
       calculateTotalPrice() {

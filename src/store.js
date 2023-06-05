@@ -1,7 +1,7 @@
 import { reactive } from "vue";
 
 const store = reactive({
-    price: 0,
-    product: [],
+    total: 0,
+    products: [],
 })
 export default store;
