@@ -1,6 +1,9 @@
 <template>
   <div class="homepage">
     <div class="hero">
+      <video class="hero-video" autoplay loop muted>
+        <source src="images/FoodMovie.mp4" type="video/mp4">
+      </video>
       <div class="hero-content">
         <h1 class="hero-title">Benvenuti</h1>
         <p class="hero-subtitle">Esplora i migliori ristoranti nella tua zona</p>
@@ -88,34 +91,67 @@ export default {
 <style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Cabin:wght@700&family=Rubik&display=swap');
 
-.homepage {
-  font-family: 'Rubik', sans-serif;
-  font-family: 'Cabin', sans-serif;
-  background-color: #f5f5f5;
-  padding: 20px;
+.hero {
+  position: relative;
+  color: #ffffff;
+
+  text-align: center;
+
+
 }
 
-.hero {
-  background-color: #333333;
-  color: #ffffff;
-  padding: 60px 20px;
-  text-align: center;
+.hero-video-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  /* Aggiungi questa riga per nascondere eventuali aree di overflow */
+}
+
+.hero-video {
+  width: 55%;
+  /* Regola la larghezza del video al 55% del contenitore */
+  height: 400px;
+  /* Imposta un'altezza fissa di 400px per il video */
+  min-height: 100%;
+  /* Imposta un'altezza minima del video al 100% del contenitore */
+  object-fit: cover;
+}
+
+.hero-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .hero-title {
   font-size: 40px;
   font-weight: 700;
   margin-bottom: 20px;
+  color: #f36d00;
 }
 
 .hero-subtitle {
   font-size: 18px;
   margin-bottom: 30px;
+  color: #f36d00;
 }
 
-.categories {
-  margin-top: 40px;
+
+.homepage {
+  font-family: 'Rubik', sans-serif;
+  font-family: 'Cabin', sans-serif;
+  background-color: #f5f5f5;
+  padding: 20px;
+  padding-top: 0px;
 }
+
+
+
+
 
 .section-title {
   font-size: 24px;
@@ -141,7 +177,7 @@ export default {
 }
 
 /* .restaurant-image { */
-  /* Aggiungi lo stile desiderato per l'immagine del ristorante */
+/* Aggiungi lo stile desiderato per l'immagine del ristorante */
 /* } */
 
 .restaurant-details {
