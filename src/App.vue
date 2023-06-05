@@ -4,13 +4,11 @@
       <NavBarComponent />
       <router-link to="/advanced-search" class="find-restaurant-link">Trova il ristorante che fa per te!</router-link>
     </header>
-    <main class="app-content ">
+    <main class="app-content">
       <router-view />
       <AllProducts />
-    </main>
-    <footer>
       <FooterComponent />
-    </footer>
+    </main>
   </div>
 </template>
 
@@ -38,6 +36,7 @@ export default {
 
 .app-content {
   flex-grow: 1;
+  // padding-bottom: 80px;
   overflow-y: auto;
 }
 
