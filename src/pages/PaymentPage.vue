@@ -14,6 +14,24 @@
         </div>
         <div v-else>
             <div class="container">
+ FEAT-form-order
+                <div class="col-6 offset-3">
+                    <div class="card bg-light">
+                        <div class="card-header">Informazioni sul pagamento</div>
+                        <div class="card-body">
+                            <div class="alert alert-success" v-if="nonce">
+                                Successfully generated nonce.
+                            </div>
+                            <form @submit.prevent="payWithCreditCard">
+                                <div class="form-group">
+                                    <label for="amount">Totale {{ store.price }}</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">€</span>
+                                        </div>
+                                        <input type="number" id="amount" class="form-control" v-model="total" disabled>
+                                    </div>
+
                 <div class="row">
                     <div class="col-md-6 offset-md-3">
                         <div class="card bg-light">
@@ -21,6 +39,7 @@
                             <div class="card-body">
                                 <div class="alert alert-success" v-if="nonce">
                                     Successfully generated nonce.
+
                                 </div>
                                 <form @submit.prevent="payWithCreditCard">
                                     <div class="form-group">
@@ -33,6 +52,19 @@
                                                 :value="parseFloat(total) + 1" disabled>
                                         </div>
                                     </div>
+ FEAT-form-order
+                                </div>
+                                <button class="btn btn-primary btn-block" type="submit" :disabled="isProcessing">
+                                    <span v-if="isProcessing">
+                                        <i class="fa fa-spinner fa-spin"></i> Attendere...
+                                    </span>
+                                    <span v-else>Paga</span>
+                                </button>
+                                <h1> prova{{ price }}</h1>
+                            </form>
+                            <div class="alert alert-danger mt-3" v-if="formError">
+                                {{ formError }}
+
                                     <div class="form-group">
                                         <label for="name">Nome</label>
                                         <input type="text" id="name" class="form-control" v-model="name">
@@ -65,6 +97,7 @@
                                     </div>
                                     <button type="submit" class="btn btn-primary">Paga</button>
                                 </form>
+
                             </div>
                         </div>
                     </div>
@@ -75,9 +108,23 @@
 </template>
   
 <script>
+ FEAT-form-order
+import braintree from 'braintree-web';
+import store from '../store'
+
 export default {
     data() {
         return {
+            store,
+            showConfirmation: false,
+            showLoader: false,
+            hostedFieldInstance: false,
+            nonce: "",
+
+export default {
+    data() {
+        return {
+
             total: 0,
             name: '',
             telephone: '',
