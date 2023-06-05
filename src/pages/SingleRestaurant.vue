@@ -1,84 +1,86 @@
 <template>
     <div class="cart-container">
-      <div class="cart" v-show="cartProducts.length > 0">
-        <h3>Carrello</h3>
-        <div v-if="showRestaurantWarning" class="alert">
-          Impossibile aggiungere il prodotto al carrello. Appartiene a un ristorante diverso.
-        </div>
-  
-        <ul class="cart-products">
-          <li v-for="product in cartProducts" :key="product.id" class="cart-product">
-            <span class="product-info">
-              {{ product.name }} - {{ product.price | currency }} x {{ product.quantity }}
-            </span>
-            <button @click="removeFromCart(product)" class="remove-button">Rimuovi</button>
-          </li>
-        </ul>
-        <p class="total-price">Totale: {{ calculateTotalPrice() | currency }} &euro;</p>
-  
-        <button @click="goToPaymentPage" class="checkout-button">Checkout</button>
-      </div>
-  
-      <div v-if="restaurant && restaurant.products.length > 0" class="restaurant" :style="getRestaurantBackgroundStyle(restaurant.slug)">
-        <h2 class="restaurant-name">
-          Ristorante: {{ restaurant.company_name }}
-        </h2>
-        <div class="cards">
-          <div class="card" v-for="product in restaurant.products" :key="product.id">
-            <div class="card-content">
-              <div class="product-name">
-                <strong>{{ product.name }}</strong>
-              </div>
-              <div class="product-description">
-                Descrizione: {{ product.description }}
-              </div>
-              <div class="product-price">
-                Prezzo: {{ product.price | currency }} &euro;
-              </div>
-  
-              <button class="add-to-cart-button" @click="addToCart(product)">
-                <i class="fas fa-shopping-cart"></i> Aggiungi al carrello
-              </button>
+        <div class="cart" v-show="cartProducts.length > 0">
+            <h3>Carrello</h3>
+            <div v-if="showRestaurantWarning" class="alert">
+                Impossibile aggiungere il prodotto al carrello. Appartiene a un ristorante diverso.
             </div>
-          </div>
+
+            <ul class="cart-products">
+                <li v-for="product in cartProducts" :key="product.id" class="cart-product">
+                    <span class="product-info">
+                        {{ product.name }} - {{ product.price | currency }} x {{ product.quantity }}
+                    </span>
+                    <button @click="removeFromCart(product)" class="remove-button">Rimuovi</button>
+                </li>
+            </ul>
+            <p class="total-price">Totale: {{ calculateTotalPrice() | currency }} &euro;</p>
+
+            <button @click="redirect('/payment')" class="checkout-button">Checkout</button>
         </div>
-      </div>
+
+        <div v-if="restaurant && restaurant.products.length > 0" class="restaurant"
+            :style="getRestaurantBackgroundStyle(restaurant.slug)">
+            <h2 class="restaurant-name">
+                Ristorante: {{ restaurant.company_name }}
+            </h2>
+            <div class="cards">
+                <div class="card" v-for="product in restaurant.products" :key="product.id">
+                    <div class="card-content">
+                        <div class="product-name">
+                            <strong>{{ product.name }}</strong>
+                        </div>
+                        <div class="product-description">
+                            Descrizione: {{ product.description }}
+                        </div>
+                        <div class="product-price">
+                            Prezzo: {{ product.price | currency }} &euro;
+                        </div>
+
+                        <button class="add-to-cart-button" @click="addToCart(product), calculateTotalPrice()">
+                            <i class="fas fa-shopping-cart"></i> Aggiungi al carrello
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-  </template>
+</template>
   
-  <script>
-  import axios from 'axios';
-  
-  export default {
+<script>
+import axios from 'axios';
+import store from '../store';
+export default {
     props: {
-      slug: {
-        type: String,
-        required: true,
-      },
+        slug: {
+            type: String,
+            required: true,
+        },
     },
     data() {
-      return {
-        restaurant: null,
-        cart: [],
-        restaurantImages: {
-          gambero_rosso: '/images/zia-restaurant.jpg',
-          oasis_sapori_antichi: '/images/Oasis.jpg',
-        },
-      };
+        return {
+            store,
+            restaurant: null,
+            cart: [],
+            restaurantImages: {
+                gambero_rosso: '/images/zia-restaurant.jpg',
+                oasis_sapori_antichi: '/images/Oasis.jpg',
+            },
+        };
     },
     computed: {
-      cartProducts() {
-        const products = [];
-        for (const product of this.cart) {
-          const existingProduct = products.find((p) => p.id === product.id);
-          if (existingProduct) {
-            existingProduct.quantity++;
-          } else {
-            products.push({ ...product, quantity: 1 });
-          }
-        }
-        return products;
-      },
+        cartProducts() {
+            const products = [];
+            for (const product of this.cart) {
+                const existingProduct = products.find((p) => p.id === product.id);
+                if (existingProduct) {
+                    existingProduct.quantity++;
+                } else {
+                    products.push({ ...product, quantity: 1 });
+                }
+            }
+            return products;
+        },
     },
     methods: {
         fetchRestaurantData() {
@@ -117,11 +119,9 @@
             for (const product of this.cartProducts) {
                 total += product.price * product.quantity;
             }
-            //TODO: aggiustare sintassi
             store.total = total;
             return total;
         },
-
         fetchProducts() {
             axios
                 .get(`http://127.0.0.1:8000/api/products`)
@@ -134,93 +134,71 @@
         },
         redirect(page) {
             this.$router.push(page);
-        }
-      },
-      calculateTotalPrice() {
-        let total = 0;
-        for (const product of this.cartProducts) {
-          total += product.price * product.quantity;
-        }
-        return total;
-      },
-      goToPaymentPage() {
-        const totalAmount = this.calculateTotalPrice();
-        window.location.href = `http://127.0.0.1:5173/payment?total=${totalAmount}`;
-      },
-      fetchProducts() {
-        axios
-          .get(`http://127.0.0.1:8000/api/products`)
-          .then((response) => {
-            this.products = response.data.results;
-          })
-          .catch((error) => {
-            console.error(error);
-          });
-      },
+        },
     },
     created() {
-      this.fetchRestaurantData();
-      this.fetchProducts();
+        this.fetchRestaurantData();
+        this.fetchProducts();
     },
-  };
-  </script>
+};
+</script>
   
-  <style scoped>
-  template{
+<style scoped>
+template {
     background: repeating-linear-gradient(45deg, #e66465, #e66465 10px, #9198e5 10px, #9198e5 20px);
 
-  }
-  .cart-container {
+}
+
+.cart-container {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     align-items: flex-start;
     gap: 20px;
     padding: 20px;
-  }
-  
-  .cart {
-    order: 1;
+}
+
+.cart {
     flex: 1 1 300px;
     border: 1px solid #ccc;
     border-radius: 4px;
     padding: 20px;
     background-color: rgba(255, 255, 255, 0.9);
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  }
-  
-  .cart h3 {
+}
+
+.cart h3 {
     font-size: 24px;
     margin-top: 0;
-  }
-  
-  .alert {
+}
+
+.alert {
     padding: 10px;
     background-color: #f8d7da;
     color: #721c24;
     border: 1px solid #f5c6cb;
     border-radius: 4px;
     margin-top: 10px;
-  }
-  
-  .cart-products {
+}
+
+.cart-products {
     list-style: none;
     padding: 0;
     margin: 0;
-  }
-  
-  .cart-product {
+}
+
+.cart-product {
     display: flex;
     align-items: center;
     justify-content: space-between;
     margin-bottom: 10px;
-  }
-  
-  .product-info {
+}
+
+.product-info {
     flex-grow: 1;
-  }
-  
-  .remove-button {
+}
+
+.remove-button {
     background-color: #d32f2f;
     color: #fff;
     border: none;
@@ -228,20 +206,20 @@
     padding: 5px 10px;
     cursor: pointer;
     transition: background-color 0.3s ease-in-out;
-  }
-  
-  .remove-button:hover {
+}
+
+.remove-button:hover {
     background-color: #c82333;
-  }
-  
-  .total-price {
+}
+
+.total-price {
     text-align: right;
     margin-top: 10px;
     font-weight: bold;
     font-size: 18px;
-  }
-  
-  .checkout-button {
+}
+
+.checkout-button {
     background-color: #01e064;
     color: #fff;
     border: none;
@@ -249,15 +227,15 @@
     padding: 10px 20px;
     cursor: pointer;
     transition: background-color 0.3s ease-in-out;
-  }
-  
-  .checkout-button:hover {
+}
+
+.checkout-button:hover {
     background-color: #218838;
-  }
-  
-  .restaurant {
+}
+
+.restaurant {
     flex: 1 1 300px;
-    /* margin-top: 20px; */
+    margin-top: 20px;
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -265,26 +243,26 @@
     border-radius: 4px;
     overflow: hidden;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  }
-  
-  .restaurant-name {
+}
+
+.restaurant-name {
     background-color: rgba(0, 0, 0, 0.8);
     color: #fff;
     padding: 10px;
     margin: 0;
     font-size: 24px;
-  }
-  
-  .cards {
+}
+
+.cards {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     align-items: flex-start;
     gap: 20px;
     padding: 20px;
-  }
-  
-  .card {
+}
+
+.card {
     flex: 1 1 300px;
     background-color: rgba(255, 255, 255, 0.9);
     border: 1px solid #ccc;
@@ -293,31 +271,31 @@
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease-in-out;
     cursor: pointer;
-  }
-  
-  .card:hover {
+}
+
+.card:hover {
     transform: translateY(-5px);
-  }
-  
-  .card-content {
+}
+
+.card-content {
     display: flex;
     flex-direction: column;
     gap: 10px;
-  }
-  
-  .product-name {
+}
+
+.product-name {
     font-size: 20px;
-  }
-  
-  .product-description {
+}
+
+.product-description {
     color: #666;
-  }
-  
-  .product-price {
+}
+
+.product-price {
     font-weight: bold;
-  }
-  
-  .add-to-cart-button {
+}
+
+.add-to-cart-button {
     background-color: #01e064;
     color: #fff;
     border: none;
@@ -326,29 +304,29 @@
     max-width: max-content;
     cursor: pointer;
     transition: background-color 0.3s ease-in-out;
-  }
-  
-  .add-to-cart-button:hover {
+}
+
+.add-to-cart-button:hover {
     background-color: #229355;
-  }
-  
-  @media screen and (max-width: 768px) {
+}
+
+@media screen and (max-width: 768px) {
     .cart {
-      flex: 1 1 100%;
-      margin-bottom: 20px;
+        flex: 1 1 100%;
+        margin-bottom: 20px;
     }
-  
+
     .restaurant {
-      flex: 1 1 100%;
+        flex: 1 1 100%;
     }
-  
+
     .cards {
-      justify-content: flex-start;
+        justify-content: flex-start;
     }
-  
+
     .card {
-      flex: 1 1 100%;
+        flex: 1 1 100%;
     }
-  }
-  </style>
+}
+</style>
   
