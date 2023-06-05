@@ -121,7 +121,7 @@ export default {
         },
         goToPaymentPage() {
             const totalAmount = this.calculateTotalPrice();
-            window.location.href = `http://127.0.0.1:5173/payment?total=${totalAmount}`;
+            window.location.href = `http://localhost:5175/payment?total=${totalAmount}`;
         },
         fetchProducts() {
             axios

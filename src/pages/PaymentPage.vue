@@ -175,7 +175,6 @@ export default {
             formData.append("date", this.date);
             formData.append("address", this.address);
             formData.append("email", this.email);
-            formData.append("paymentNonce", this.nonce);
             formData.append("total", this.total);
 
             
