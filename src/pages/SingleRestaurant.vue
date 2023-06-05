@@ -155,6 +155,7 @@
   }
   
   .cart {
+    order: 1;
     flex: 1 1 300px;
     border: 1px solid #ccc;
     border-radius: 4px;
@@ -231,7 +232,7 @@
   
   .restaurant {
     flex: 1 1 300px;
-    margin-top: 20px;
+    /* margin-top: 20px; */
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
