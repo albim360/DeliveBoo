@@ -31,6 +31,26 @@
                                         <input type="number" id="amount" class="form-control" v-model="total" disabled>
                                     </div>
                                 </div>
+                                <div class="form-group">
+                                    <label for="name">Nome</label>
+                                    <input type="text" id="name" class="form-control" v-model="name">
+                                </div>
+                                <div class="form-group">
+                                    <label for="telephone">Telefono</label>
+                                    <input type="tel" id="telephone" class="form-control" v-model="telephone">
+                                </div>
+                                <div class="form-group">
+                                    <label for="date">Data</label>
+                                    <input type="date" id="date" class="form-control" v-model="date">
+                                </div>
+                                <div class="form-group">
+                                    <label for="address">Indirizzo</label>
+                                    <input type="text" id="address" class="form-control" v-model="address">
+                                </div>
+                                <div class="form-group">
+                                    <label for="email">Email</label>
+                                    <input type="email" id="email" class="form-control" v-model="email">
+                                </div>
                                 <hr />
                                 <div class="form-group">
                                     <label>Numero carta di credito</label>
@@ -65,9 +85,10 @@
         </div>
     </div>
 </template>
-  
+
 <script>
 import braintree from 'braintree-web';
+import axios from 'axios';
 
 export default {
     data() {
@@ -78,7 +99,12 @@ export default {
             nonce: "",
             total: 0,
             formError: "",
-            isProcessing: false
+            isProcessing: false,
+            name: "",
+            telephone: "",
+            date: "",
+            address: "",
+            email: ""
         };
     },
     mounted() {
@@ -140,9 +166,30 @@ export default {
         },
         confirmPayment() {
             // Simula l'azione di conferma del pagamento
-            setTimeout(() => {
-                this.showConfirmationPage();
-            }, 2000);
+            this.showLoader = true;
+
+            // Crea un oggetto FormData con i dati del form
+            const formData = new FormData();
+            formData.append("name", this.name);
+            formData.append("telephone", this.telephone);
+            formData.append("date", this.date);
+            formData.append("address", this.address);
+            formData.append("email", this.email);
+            formData.append("paymentNonce", this.nonce);
+            formData.append("total", this.total);
+
+            
+            axios.post("http://127.0.0.1:8000/api/orders", formData)
+                .then(response => {
+                    console.log("Dati inviati con successo:", response.data);
+                    this.showLoader = false;
+                    this.showConfirmationPage();
+                })
+                .catch(error => {
+                    console.error("Errore durante l'invio dei dati:", error);
+                    this.showLoader = false;
+                    this.formError = "Errore durante l'invio dei dati. Riprova.";
+                });
         },
         showConfirmationPage() {
             // Mostra la pagina di conferma del pagamento
@@ -163,7 +210,7 @@ export default {
     }
 };
 </script>
-  
+
 <style>
 .fa-spinner {
     animation: fa-spin 2s infinite linear;
@@ -220,5 +267,3 @@ export default {
     }
 }
 </style>
-  
-  
