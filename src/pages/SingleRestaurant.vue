@@ -281,6 +281,7 @@ template {
     display: flex;
     flex-direction: column;
     gap: 10px;
+    height: 200px;
 }
 
 .product-name {
@@ -304,6 +305,7 @@ template {
   max-width: max-content;
   cursor: pointer;
   transition: background-color 0.3s ease-in-out;
+  margin-top: auto;
 }
 
 .add-to-cart-button:hover {
@@ -320,12 +322,11 @@ template {
     flex: 1 1 100%;
   }
 
-  .cards {
-    justify-content: flex-start;
-  }
 
   .card {
     flex: 1 1 100%;
+    width: 120px;
+    height: 150px;
   }
 }
 </style>
