@@ -14,57 +14,69 @@
         </div>
         <div v-else>
             <div class="container">
-                <div class="row">
-                    <div class="col-md-6 offset-md-3">
-                        <div class="card bg-light">
-                            <div class="card-header">Informazioni sul pagamento</div>
-                            <div class="card-body">
-                                <div class="alert alert-success" v-if="nonce">
-                                    Successfully generated nonce.
+                <div class="col-6 offset-3">
+                    <div class="card bg-light">
+                        <div class="card-header">Informazioni sul pagamento</div>
+                        <div class="card-body">
+                            <div class="alert alert-success" v-if="nonce">
+                                Successfully generated nonce.
+                            </div>
+                            <form @submit.prevent="payWithCreditCard">
+                                <div class="form-group">
+                                    <label for="amount">Totale</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">€</span>
+                                        </div>
+                                        <input type="number" id="amount" class="form-control" v-model="total" disabled>
+                                    </div>
                                 </div>
-                                <form @submit.prevent="payWithCreditCard">
-                                    <div class="form-group">
-                                        <label for="amount">Totale</label>
-                                        <div class="input-group">
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text">€</span>
-                                            </div>
-                                            <input type="number" id="amount" class="form-control"
-                                                :value="parseFloat(total) + 1" disabled>
+                                <div class="form-group">
+                                    <label for="name">Nome</label>
+                                    <input type="text" id="name" class="form-control" v-model="name">
+                                </div>
+                                <div class="form-group">
+                                    <label for="telephone">Telefono</label>
+                                    <input type="tel" id="telephone" class="form-control" v-model="telephone">
+                                </div>
+                                <div class="form-group">
+                                    <label for="date">Data</label>
+                                    <input type="date" id="date" class="form-control" v-model="date">
+                                </div>
+                                <div class="form-group">
+                                    <label for="address">Indirizzo</label>
+                                    <input type="text" id="address" class="form-control" v-model="address">
+                                </div>
+                                <div class="form-group">
+                                    <label for="email">Email</label>
+                                    <input type="email" id="email" class="form-control" v-model="email">
+                                </div>
+                                <hr />
+                                <div class="form-group">
+                                    <label>Numero carta di credito</label>
+                                    <div id="creditCardNumber" class="form-control"></div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <label>Expire Date</label>
+                                            <div id="expireDate" class="form-control"></div>
+                                        </div>
+                                        <div class="col-6">
+                                            <label>CVV</label>
+                                            <div id="cvv" class="form-control"></div>
                                         </div>
                                     </div>
-                                    <div class="form-group">
-                                        <label for="name">Nome</label>
-                                        <input type="text" id="name" class="form-control" v-model="name">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="telephone">Telefono</label>
-                                        <input type="tel" id="telephone" class="form-control" v-model="telephone">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="date">Data</label>
-                                        <input type="date" id="date" class="form-control" v-model="date">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="address">Indirizzo</label>
-                                        <input type="text" id="address" class="form-control" v-model="address">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="email">Email</label>
-                                        <input type="email" id="email" class="form-control" v-model="email">
-                                    </div>
-                                    <hr />
-                                    <div class="form-group">
-                                        <label>Numero carta di credito</label>
-                                        <div id="creditCardNumber" class="form-control" maxlength="16" contenteditable="true"></div>
-                                      </div>
-                                      
-                                    <div class="form-group">
-                                        <label for="cvv">CVV</label>
-                                        <input type="number" id="cvv" maxlength="3" class="form-control" v-model="cvv">
-                                    </div>
-                                    <button type="submit" class="btn btn-primary">Paga</button>
-                                </form>
+                                </div>
+                                <button class="btn btn-primary btn-block" type="submit" :disabled="isProcessing">
+                                    <span v-if="isProcessing">
+                                        <i class="fa fa-spinner fa-spin"></i> Attendere...
+                                    </span>
+                                    <span v-else>Paga</span>
+                                </button>
+                            </form>
+                            <div class="alert alert-danger mt-3" v-if="formError">
+                                {{ formError }}
                             </div>
                         </div>
                     </div>
@@ -73,62 +85,157 @@
         </div>
     </div>
 </template>
-  
+
 <script>
+import braintree from 'braintree-web';
+import axios from 'axios';
+
 export default {
     data() {
         return {
-            total: 0,
-            name: '',
-            telephone: '',
-            date: '',
-            address: '',
-            email: '',
-            cvv: '',
-            showLoader: false,
             showConfirmation: false,
-            nonce: '',
+            showLoader: false,
+            hostedFieldInstance: false,
+            nonce: "",
+            total: 0,
+            formError: "",
+            isProcessing: false,
+            name: "",
+            telephone: "",
+            date: "",
+            address: "",
+            email: ""
         };
     },
-    created() {
-        // Ottieni il valore del parametro 'total' dall'URL
-        const urlParams = new URLSearchParams(window.location.search);
-        this.total = parseInt(urlParams.get('total')) || 0;
+    mounted() {
+        braintree.client.create({
+            authorization: "sandbox_s9d8kg26_748b2m3dq2wrsn9n"
+        })
+            .then(clientInstance => {
+                let options = {
+                    client: clientInstance,
+                    styles: {
+                        input: {
+                            'font-size': '14px',
+                            'font-family': 'Open Sans'
+                        }
+                    },
+                    fields: {
+                        number: {
+                            selector: '#creditCardNumber',
+                            placeholder: 'Enter Credit Card'
+                        },
+                        cvv: {
+                            selector: '#cvv',
+                            placeholder: 'Enter CVV'
+                        },
+                        expirationDate: {
+                            selector: '#expireDate',
+                            placeholder: '00 / 0000'
+                        }
+                    }
+                };
+                return braintree.hostedFields.create(options);
+            })
+            .then(hostedFieldInstance => {
+                this.hostedFieldInstance = hostedFieldInstance;
+            })
+            .catch(err => {
+                console.error(err);
+            });
     },
-
     methods: {
         payWithCreditCard() {
-            this.showLoader = true;
-            // Simulazione di una chiamata asincrona
-            setTimeout(() => {
-                this.showLoader = false;
-                this.showConfirmation = true;
-            }, 2000);
+            if (this.hostedFieldInstance) {
+                this.formError = ""; // Resetta l'errore del form
+                this.isProcessing = true; // Attiva lo stato di elaborazione
+
+                this.hostedFieldInstance.tokenize()
+                    .then(payload => {
+                        console.log(payload);
+                        this.nonce = payload.nonce;
+                        console.log(this.nonce);
+                        this.confirmPayment();
+                    })
+                    .catch(err => {
+                        console.error(err);
+                        this.formError = "Errore durante la generazione del nonce. Riprova.";
+                        this.isProcessing = false; // Disattiva lo stato di elaborazione
+                    });
+            }
         },
+        confirmPayment() {
+            // Simula l'azione di conferma del pagamento
+            this.showLoader = true;
+
+            // Crea un oggetto FormData con i dati del form
+            const formData = new FormData();
+            formData.append("name", this.name);
+            formData.append("telephone", this.telephone);
+            formData.append("date", this.date);
+            formData.append("address", this.address);
+            formData.append("email", this.email);
+            formData.append("paymentNonce", this.nonce);
+            formData.append("total", this.total);
+
+            
+            axios.post("http://127.0.0.1:8000/api/orders", formData)
+                .then(response => {
+                    console.log("Dati inviati con successo:", response.data);
+                    this.showLoader = false;
+                    this.showConfirmationPage();
+                })
+                .catch(error => {
+                    console.error("Errore durante l'invio dei dati:", error);
+                    this.showLoader = false;
+                    this.formError = "Errore durante l'invio dei dati. Riprova.";
+                });
+        },
+        showConfirmationPage() {
+            // Mostra la pagina di conferma del pagamento
+            this.showConfirmation = true;
+
+            // Mostra l'icona o il logo dell'home page
+            console.log("Mostra l'icona o il logo dell'home page.");
+
+            // Dopo un breve ritardo, reindirizza alla home
+            setTimeout(() => {
+                this.$router.push('/');
+            }, 5000);
+        }
     },
+    created() {
+        const params = new URLSearchParams(window.location.search);
+        this.total = params.get('total');
+    }
 };
 </script>
-  
-<style scoped>
-/* Stili personalizzati per la pagina */
-.container {
-    padding-top: 50px;
+
+<style>
+.fa-spinner {
+    animation: fa-spin 2s infinite linear;
 }
 
-.card {
-    margin-top: 30px;
+@keyframes fa-spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
 }
 
-.card-header {
-    background-color: #f2f2f2;
+.confirmation-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #fff;
 }
 
-.alert-success {
-    margin-top: 20px;
-}
-
-.logo {
-    width: 150px;
+.confirmation-page h1 {
+    font-size: 24px;
 }
 
 .loading-page {
@@ -136,17 +243,18 @@ export default {
     justify-content: center;
     align-items: center;
     height: 100vh;
+    background-color: #fff;
 }
 
 .loader {
-    border: 8px solid #f3f3f3;
-    /* grigio chiaro */
-    border-top: 8px solid #3498db;
-    /* blu */
+    border: 4px solid #f3f3f3;
+    /* Colore del bordo */
+    border-top: 4px solid #3498db;
+    /* Colore del loader */
     border-radius: 50%;
-    width: 60px;
-    height: 60px;
-    animation: spin 2s linear infinite;
+    width: 30px;
+    height: 30px;
+    animation: spin 1s linear infinite;
 }
 
 @keyframes spin {
@@ -157,5 +265,5 @@ export default {
     100% {
         transform: rotate(360deg);
     }
-}</style>
-  
+}
+</style>
