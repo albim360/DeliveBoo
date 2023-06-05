@@ -68,7 +68,15 @@ export default {
       this.selectedCategoryId = categoryId;
     },
     redirectToRestaurant(slug) {
-      // Aggiungi qui il codice per reindirizzare all'URL del ristorante selezionato
+      axios.get(`http://127.0.0.1:8000/api/restaurants/${slug}`)
+        .then(response => {
+          this.products = response.data.products;
+          console.log(this.products);
+          this.$router.push({ name: 'single-restaurant', params: { slug } });
+        })
+        .catch(error => {
+          console.error(error);
+        });
     },
     redirectToAdvancedSearch() {
       this.$router.push({ name: 'advanced-search' });
