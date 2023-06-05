@@ -94,10 +94,7 @@ export default {
 .hero {
   position: relative;
   color: #ffffff;
-
   text-align: center;
-
-
 }
 
 .hero-video-overlay {
@@ -107,16 +104,14 @@ export default {
   width: 100%;
   height: 100%;
   overflow: hidden;
-  /* Aggiungi questa riga per nascondere eventuali aree di overflow */
 }
 
 .hero-video {
-  width: 55%;
-  /* Regola la larghezza del video al 55% del contenitore */
-  height: 400px;
-  /* Imposta un'altezza fissa di 400px per il video */
+  width: 100%;
+  /* Set the video width to 100% of its container */
+  height: auto;
+  /* Allow the video to adjust its height automatically */
   min-height: 100%;
-  /* Imposta un'altezza minima del video al 100% del contenitore */
   object-fit: cover;
 }
 
@@ -140,7 +135,6 @@ export default {
   color: #f36d00;
 }
 
-
 .homepage {
   font-family: 'Rubik', sans-serif;
   font-family: 'Cabin', sans-serif;
@@ -148,10 +142,6 @@ export default {
   padding: 20px;
   padding-top: 0px;
 }
-
-
-
-
 
 .section-title {
   font-size: 24px;
@@ -175,10 +165,6 @@ export default {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   padding: 20px;
 }
-
-/* .restaurant-image { */
-/* Aggiungi lo stile desiderato per l'immagine del ristorante */
-/* } */
 
 .restaurant-details {
   margin-top: 15px;
@@ -216,4 +202,15 @@ export default {
 .show-products-btn:hover {
   background-color: #ff005a;
 }
+
+@media only screen and (max-width: 767px) {
+  .hero-title {
+    font-size: 24px;
+  }
+
+  .hero-subtitle {
+    font-size: 14px;
+  }
+}
 </style>
+
