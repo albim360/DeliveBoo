@@ -160,6 +160,7 @@ template {
 
 .cart {
     flex: 1 1 300px;
+    order: 1;
     border: 1px solid #ccc;
     border-radius: 4px;
     padding: 20px;
@@ -182,84 +183,83 @@ template {
 }
 
 .cart-products {
-    list-style: none;
-    padding: 0;
-    margin: 0;
+  list-style: none;
+  padding: 0;
+  margin: 0;
 }
 
 .cart-product {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
 }
 
 .product-info {
-    flex-grow: 1;
+  flex-grow: 1;
 }
 
 .remove-button {
-    background-color: #d32f2f;
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-    padding: 5px 10px;
-    cursor: pointer;
-    transition: background-color 0.3s ease-in-out;
+  background-color: #d32f2f;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 5px 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
 }
 
 .remove-button:hover {
-    background-color: #c82333;
+  background-color: #c82333;
 }
 
 .total-price {
-    text-align: right;
-    margin-top: 10px;
-    font-weight: bold;
-    font-size: 18px;
+  text-align: right;
+  margin-top: 10px;
+  font-weight: bold;
+  font-size: 18px;
 }
 
 .checkout-button {
-    background-color: #01e064;
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-    padding: 10px 20px;
-    cursor: pointer;
-    transition: background-color 0.3s ease-in-out;
+  background-color: #01e064;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
 }
 
 .checkout-button:hover {
-    background-color: #218838;
+  background-color: #218838;
 }
 
 .restaurant {
-    flex: 1 1 300px;
-    margin-top: 20px;
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    height: 60vh;
-    border-radius: 4px;
-    overflow: hidden;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  flex: 1 1 300px;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 60vh;
+  border-radius: 4px;
+  overflow: hidden;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 .restaurant-name {
-    background-color: rgba(0, 0, 0, 0.8);
-    color: #fff;
-    padding: 10px;
-    margin: 0;
-    font-size: 24px;
+  background-color: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  padding: 10px;
+  margin: 0;
+  font-size: 24px;
 }
 
 .cards {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: flex-start;
-    gap: 20px;
-    padding: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 20px;
+  padding: 20px;
 }
 
 .card {
@@ -296,37 +296,37 @@ template {
 }
 
 .add-to-cart-button {
-    background-color: #01e064;
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-    padding: 10px 20px;
-    max-width: max-content;
-    cursor: pointer;
-    transition: background-color 0.3s ease-in-out;
+  background-color: #01e064;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 10px 20px;
+  max-width: max-content;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
 }
 
 .add-to-cart-button:hover {
-    background-color: #229355;
+  background-color: #229355;
 }
 
 @media screen and (max-width: 768px) {
-    .cart {
-        flex: 1 1 100%;
-        margin-bottom: 20px;
-    }
+  .cart {
+    flex: 1 1 100%;
+    margin-bottom: 20px;
+  }
 
-    .restaurant {
-        flex: 1 1 100%;
-    }
+  .restaurant {
+    flex: 1 1 100%;
+  }
 
-    .cards {
-        justify-content: flex-start;
-    }
+  .cards {
+    justify-content: flex-start;
+  }
 
-    .card {
-        flex: 1 1 100%;
-    }
+  .card {
+    flex: 1 1 100%;
+  }
 }
 </style>
   
