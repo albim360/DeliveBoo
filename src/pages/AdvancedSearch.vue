@@ -24,9 +24,6 @@
             <ul class="restaurants-list list-group">
               <li class="list-group-item" v-for="restaurant in filteredRestaurants" :key="restaurant.id" @click="handleRestaurantClick(restaurant)">
                 <div class="row">
-                  <div class="col-4 col-md-3">
-                    <img :src="restaurant.image" alt="Restaurant Image" class="restaurant-image">
-                  </div>
                   <div class="col-8 col-md-9">
                     <h4>{{ restaurant.company_name }}</h4>
                     <div class="cuisine-types">

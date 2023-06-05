@@ -230,7 +230,7 @@ export default {
   padding: 8px 16px;
   font-size: 14px;
   font-weight: 700;
-  background-color: #ff4081;
+  background-color: #01e064;
   color: #ffffff;
   border: none;
   border-radius: 4px;
@@ -238,7 +238,7 @@ export default {
 }
 
 .show-products-btn:hover {
-  background-color: #ff005a;
+  background-color: #26b968;
 }
 
 @media only screen and (max-width: 767px) {
