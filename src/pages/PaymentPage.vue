@@ -68,13 +68,14 @@
                                         </div>
                                     </div>
                                 </div>
-                                <button class="btn btn-primary btn-block" type="submit" :disabled="isProcessing">
+                                <button class="btn btn-primary btn-block" type="submit" :disabled="isProcessing"  @click="confirmPayment()" >
                                     <span v-if="isProcessing">
                                         <i class="fa fa-spinner fa-spin"></i> Attendere...
                                     </span>
                                     <span v-else>Paga</span>
                                 </button>
-                                <button class="btn btn-success"  @click="confirmPayment()">okok</button>
+                                <!-- TODO: tasto debug  -->
+                                <!-- <button class="btn btn-success"  @click="confirmPayment()">okok</button> -->
                             </form>
                             <div class="alert alert-danger mt-3" v-if="formError">
                                 {{ formError }}
