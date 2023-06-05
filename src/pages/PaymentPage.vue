@@ -187,6 +187,7 @@ export default {
                 address: this.address,
                 email: this.email,
                 prod: store.products,
+                total_payment: store.total,
             }
             
             axios.post("http://127.0.0.1:8000/api/orders", dati)
