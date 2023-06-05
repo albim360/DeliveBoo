@@ -130,11 +130,7 @@ export default {
             store.price = total;
             return total;
         },
-        // totPayment() {
-        //     const totalAmount = this.calculateTotalPrice();
-        //     //window.location.href = `http://192.168.0.247:5173/payment?total=${totalAmount}`;
-        //     return totalAmount;
-        // },
+
         fetchProducts() {
             axios
                 .get(`http://127.0.0.1:8000/api/products`)

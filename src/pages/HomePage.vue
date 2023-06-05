@@ -1,6 +1,9 @@
 <template>
   <div class="homepage">
     <div class="hero">
+      <video class="hero-video" autoplay loop muted>
+        <source src="images/FoodMovie.mp4" type="video/mp4">
+      </video>
       <div class="hero-content">
         <h1 class="hero-title">Benvenuti</h1>
         <p class="hero-subtitle">Esplora i migliori ristoranti nella tua zona</p>
@@ -8,9 +11,12 @@
     </div>
 
     <section class="categories">
-      <h2 class="section-title">Categorie</h2>
       <CategoryCardComponent @categorySelected="onCategorySelected" />
     </section>
+
+    <button class="advanced-search-btn" @click="redirectToAdvancedSearch">
+      Non hai ancora scelto? Scopri la nostra ricerca avanzata!
+    </button>
 
     <section class="featured-restaurants">
       <h2 class="section-title">Ristoranti in evidenza</h2>
@@ -23,7 +29,9 @@
             <h3 class="restaurant-title">{{ restaurant.company_name }}</h3>
             <p class="restaurant-address">{{ restaurant.address }}</p>
             <p class="restaurant-category">{{ getRestaurantCategories(restaurant) }}</p>
-            <button class="show-products-btn" @click="redirectToRestaurant(restaurant.slug)">Mostra Prodotti</button>
+            <button class="show-products-btn" @click="redirectToRestaurant(restaurant.slug)">
+              Mostra Prodotti
+            </button>
           </div>
         </div>
       </div>
@@ -62,6 +70,9 @@ export default {
     redirectToRestaurant(slug) {
       // Aggiungi qui il codice per reindirizzare all'URL del ristorante selezionato
     },
+    redirectToAdvancedSearch() {
+      this.$router.push({ name: 'advanced-search' });
+    },
     getRestaurantCategories(restaurant) {
       return restaurant.typologies.map(typology => typology.name).join(', ');
     },
@@ -88,39 +99,84 @@ export default {
 <style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Cabin:wght@700&family=Rubik&display=swap');
 
-.homepage {
-  font-family: 'Rubik', sans-serif;
-  font-family: 'Cabin', sans-serif;
-  background-color: #f5f5f5;
-  padding: 20px;
+.hero {
+  position: relative;
+  color: #ffffff;
+  text-align: center;
 }
 
-.hero {
-  background-color: #333333;
-  color: #ffffff;
-  padding: 60px 20px;
-  text-align: center;
+.hero-video-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.hero-video {
+  width: 100%;
+  /* Set the video width to 100% of its container */
+  height: auto;
+  /* Allow the video to adjust its height automatically */
+  min-height: 100%;
+  object-fit: cover;
+}
+
+.hero-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .hero-title {
   font-size: 40px;
   font-weight: 700;
   margin-bottom: 20px;
+  color: #f36d00;
 }
 
 .hero-subtitle {
   font-size: 18px;
   margin-bottom: 30px;
+  color: #f36d00;
 }
 
-.categories {
-  margin-top: 40px;
+.homepage {
+  font-family: 'Rubik', sans-serif;
+  font-family: 'Cabin', sans-serif;
+  background-color: #f5f5f5;
+  padding: 20px;
+  padding-top: 0px;
 }
 
 .section-title {
   font-size: 24px;
   font-weight: 700;
   margin-bottom: 20px;
+}
+
+.advanced-search-btn {
+  display: block;
+  margin: 20px auto;
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  text-decoration: none;
+  font-weight: bold;
+  border-radius: 4px;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.advanced-search-btn:hover {
+  background-color: #0056b3;
+}
+
+.advanced-search-btn:focus,
+.advanced-search-btn:active {
+  outline: none;
+  background-color: #0056b3;
 }
 
 .featured-restaurants {
@@ -139,10 +195,6 @@ export default {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   padding: 20px;
 }
-
-/* .restaurant-image { */
-  /* Aggiungi lo stile desiderato per l'immagine del ristorante */
-/* } */
 
 .restaurant-details {
   margin-top: 15px;
@@ -180,4 +232,15 @@ export default {
 .show-products-btn:hover {
   background-color: #ff005a;
 }
+
+@media only screen and (max-width: 767px) {
+  .hero-title {
+    font-size: 24px;
+  }
+
+  .hero-subtitle {
+    font-size: 14px;
+  }
+}
 </style>
+

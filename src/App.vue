@@ -2,15 +2,12 @@
   <div id="app" class="app-container">
     <header>
       <NavBarComponent />
-      <router-link to="/advanced-search" class="find-restaurant-link">Trova il ristorante che fa per te!</router-link>
     </header>
-    <main class="app-content ">
+    <main class="app-content">
       <router-view />
       <AllProducts />
-    </main>
-    <footer>
       <FooterComponent />
-    </footer>
+    </main>
   </div>
 </template>
 
@@ -33,12 +30,13 @@ export default {
   display: flex;
   flex-direction: column;
   height: 100vh;
-  background-color: #f5f5f5;
+  background-color: #f0f0f0;
 }
 
 .app-content {
   flex-grow: 1;
-  overflow-y: auto;
+  // padding-bottom: 80px;
+  // overflow-y: auto;
 }
 
 .find-restaurant-link {
