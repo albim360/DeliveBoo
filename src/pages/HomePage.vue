@@ -8,7 +8,6 @@
     </div>
 
     <section class="categories">
-      <h2 class="section-title">Categorie</h2>
       <CategoryCardComponent @categorySelected="onCategorySelected" />
     </section>
 
