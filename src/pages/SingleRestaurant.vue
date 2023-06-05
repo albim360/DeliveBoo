@@ -113,7 +113,7 @@ export default {
                 return;
             }
             this.cart.push(product);
-            store.product.push(product);
+            store.products.push(product);
         },
         removeFromCart(product) {
             const index = this.cart.findIndex((p) => p.id === product.id);
@@ -127,7 +127,7 @@ export default {
                 total += product.price * product.quantity;
             }
             //TODO: aggiustare sintassi
-            store.price = total;
+            store.total = total;
             return total;
         },
 
