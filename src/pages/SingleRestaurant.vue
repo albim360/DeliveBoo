@@ -14,10 +14,9 @@
                     <button @click="removeFromCart(product)" class="remove-button">Rimuovi</button>
                 </li>
             </ul>
-            <p class="total-price">Totale: {{ calculateTotalPrice() | currency }}</p>
+            <!-- <p class="total-price">Totale: {{ calculateTotalPrice() | currency }}</p> -->
 
-            <button @click="redirect('/payment')" class="checkout-button"
-            >
+            <button @click="redirect('/payment')" class="checkout-button">
                 Checkout
             </button>
         </div>
@@ -40,7 +39,7 @@
                             Prezzo: {{ product.price | currency }}
                         </div>
 
-                        <button class="add-to-cart-button" @click="addToCart(product), totPayment()">
+                        <button class="add-to-cart-button" @click="addToCart(product), calculateTotalPrice()">
                             <i class="fas fa-shopping-cart"></i> Aggiungi al carrello
                         </button>
                     </div>
@@ -53,6 +52,7 @@
 <script>
 import axios from 'axios';
 import PaymentPage from './PaymentPage.vue';
+import store from '../store';
 
 export default {
     props: {
@@ -61,20 +61,18 @@ export default {
             required: true,
         },
     },
+    components: {
+        PaymentPage
+    },
     data() {
         return {
+            store,
             restaurant: null,
             cart: [],
             restaurantImages: {
                 gambero_rosso: '/images/zia-restaurant.jpg',
                 oasis_sapori_antichi: '/images/Oasis.jpg',
             },
-            // checkOut:[
-            //     {
-            //         price: this.totPayment(),
-            //         product: this.product
-            //     }
-            // ],
         };
     },
     computed: {
@@ -115,6 +113,7 @@ export default {
                 return;
             }
             this.cart.push(product);
+            store.product.push(product);
         },
         removeFromCart(product) {
             const index = this.cart.findIndex((p) => p.id === product.id);
@@ -127,13 +126,15 @@ export default {
             for (const product of this.cartProducts) {
                 total += product.price * product.quantity;
             }
+            //TODO: aggiustare sintassi
+            store.price = total;
             return total;
         },
-        totPayment() {
-            const totalAmount = this.calculateTotalPrice();
-            //window.location.href = `http://192.168.0.247:5173/payment?total=${totalAmount}`;
-            return totalAmount;
-        },
+        // totPayment() {
+        //     const totalAmount = this.calculateTotalPrice();
+        //     //window.location.href = `http://192.168.0.247:5173/payment?total=${totalAmount}`;
+        //     return totalAmount;
+        // },
         fetchProducts() {
             axios
                 .get(`http://127.0.0.1:8000/api/products`)

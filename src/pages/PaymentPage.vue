@@ -23,7 +23,7 @@
                             </div>
                             <form @submit.prevent="payWithCreditCard">
                                 <div class="form-group">
-                                    <label for="amount">Totale</label>
+                                    <label for="amount">Totale {{ store.price }}</label>
                                     <div class="input-group">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text">€</span>
@@ -69,10 +69,12 @@
   
 <script>
 import braintree from 'braintree-web';
+import store from '../store'
 
 export default {
     data() {
         return {
+            store,
             showConfirmation: false,
             showLoader: false,
             hostedFieldInstance: false,
@@ -82,7 +84,6 @@ export default {
             isProcessing: false
         };
     },
-    props: ['price','product'],
     mounted() {
         braintree.client.create({
             authorization: "sandbox_s9d8kg26_748b2m3dq2wrsn9n"
