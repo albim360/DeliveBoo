@@ -14,9 +14,11 @@
                     <button @click="removeFromCart(product)" class="remove-button">Rimuovi</button>
                 </li>
             </ul>
-            <p class="total-price">Totale: {{ calculateTotalPrice() | currency }}</p>
+            <!-- <p class="total-price">Totale: {{ calculateTotalPrice() | currency }}</p> -->
 
-            <button @click="goToPaymentPage" class="checkout-button">Checkout</button>
+            <button @click="redirect('/payment')" class="checkout-button">
+                Checkout
+            </button>
         </div>
 
         <div v-if="restaurant && restaurant.products.length > 0" class="restaurant"
@@ -37,7 +39,7 @@
                             Prezzo: {{ product.price | currency }}
                         </div>
 
-                        <button class="add-to-cart-button" @click="addToCart(product)">
+                        <button class="add-to-cart-button" @click="addToCart(product), calculateTotalPrice()">
                             <i class="fas fa-shopping-cart"></i> Aggiungi al carrello
                         </button>
                     </div>
@@ -49,6 +51,8 @@
   
 <script>
 import axios from 'axios';
+import PaymentPage from './PaymentPage.vue';
+import store from '../store';
 
 export default {
     props: {
@@ -57,8 +61,12 @@ export default {
             required: true,
         },
     },
+    components: {
+        PaymentPage
+    },
     data() {
         return {
+            store,
             restaurant: null,
             cart: [],
             restaurantImages: {
@@ -105,6 +113,7 @@ export default {
                 return;
             }
             this.cart.push(product);
+            store.product.push(product);
         },
         removeFromCart(product) {
             const index = this.cart.findIndex((p) => p.id === product.id);
@@ -117,12 +126,11 @@ export default {
             for (const product of this.cartProducts) {
                 total += product.price * product.quantity;
             }
+            //TODO: aggiustare sintassi
+            store.price = total;
             return total;
         },
-        goToPaymentPage() {
-            const totalAmount = this.calculateTotalPrice();
-            window.location.href = `http://127.0.0.1:5173/payment?total=${totalAmount}`;
-        },
+
         fetchProducts() {
             axios
                 .get(`http://127.0.0.1:8000/api/products`)
@@ -133,11 +141,14 @@ export default {
                     console.error(error);
                 });
         },
+        redirect(page) {
+            this.$router.push(page);
+        }
     },
     created() {
         this.fetchRestaurantData();
         this.fetchProducts();
-    },
+    }
 };
 </script>
   
