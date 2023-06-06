@@ -35,7 +35,8 @@ export default {
 
 .app-content {
   flex-grow: 1;
-  // padding-bottom: 80px;
+  background-color: #f0f0f0;
+  padding: 10px;
   // overflow-y: auto;
 }
 
