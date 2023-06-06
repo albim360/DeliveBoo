@@ -14,9 +14,11 @@
       <CategoryCardComponent @categorySelected="onCategorySelected" />
     </section>
 
-    <button class="advanced-search-btn" @click="redirectToAdvancedSearch">
+    <section class="bg-btn-search">
+      <button class="advanced-search-btn" @click="redirectToAdvancedSearch">
       Non hai ancora scelto? Scopri la nostra ricerca avanzata!
     </button>
+    </section>
 
     <section class="featured-restaurants">
       <h2 class="section-title">Ristoranti in evidenza</h2>
@@ -35,6 +37,25 @@
           </div>
         </div>
       </div>
+    </section>
+
+    <section>
+
+      <div class="banner-container">
+    <div class="banner-content">
+      <h2>Scarica la nostra app!</h2>
+      <p>Disponibile su</p>
+      <div class="app-store-links">
+        <a href="https://appstoreconnect.apple.com/login" class="app-store-link">
+          <img src="public\images\apple-download.png" alt="Download on the App Store" />
+        </a>
+        <a href="https://play.google.com/store/games" class="play-store-link">
+          <img src="public\images\Google-Play-Logo.png" alt="Get it on Google Play" />
+        </a>
+      </div>
+    </div>
+  </div>
+
     </section>
   </div>
 </template>
@@ -120,6 +141,12 @@ export default {
   width: 100%;
   height: 100%;
   overflow: hidden;
+}
+
+.bg-btn-search{
+  background: #ff6600;
+  height: 10%;
+  width: auto;
 }
 
 .hero-video {
@@ -248,6 +275,48 @@ export default {
 
   .hero-subtitle {
     font-size: 14px;
+  }
+}
+
+.banner-container {
+  background-color: #f8f9fa;
+  padding: 20px;
+  text-align: center;
+}
+
+.banner-content {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.app-store-links {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.app-store-link,
+.play-store-link {
+  margin: 0 10px;
+}
+
+.app-store-link img,
+.play-store-link img {
+  height: 40px;
+}
+
+@media (max-width: 767.98px) {
+  .banner-content {
+    padding: 0 10px;
+  }
+
+  .app-store-links {
+    flex-direction: column;
+  }
+
+  .app-store-link,
+  .play-store-link {
+    margin: 10px 0;
   }
 }
 </style>
