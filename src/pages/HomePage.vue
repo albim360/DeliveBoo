@@ -14,7 +14,7 @@
       <CategoryCardComponent @categorySelected="onCategorySelected" />
     </section>
 
-    <section class="bg-btn-search">
+    <section>
       <button class="advanced-search-btn" @click="redirectToAdvancedSearch">
       Non hai ancora scelto? Scopri la nostra ricerca avanzata!
     </button>
